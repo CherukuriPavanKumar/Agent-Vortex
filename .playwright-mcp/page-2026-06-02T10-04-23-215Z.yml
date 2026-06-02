@@ -1,0 +1,870 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - link "Skip to content" [ref=e4] [cursor=pointer]:
+      - /url: "#start-of-content"
+    - banner [ref=e6]:
+      - heading "Navigation Menu" [level=2] [ref=e7]
+      - generic [ref=e8]:
+        - link "Homepage" [ref=e10] [cursor=pointer]:
+          - /url: /
+          - img [ref=e11]
+        - generic [ref=e13]:
+          - navigation "Global" [ref=e16]:
+            - list [ref=e17]:
+              - listitem [ref=e18]:
+                - button "Platform" [ref=e20] [cursor=pointer]:
+                  - text: Platform
+                  - img [ref=e21]
+              - listitem [ref=e23]:
+                - button "Solutions" [ref=e25] [cursor=pointer]:
+                  - text: Solutions
+                  - img [ref=e26]
+              - listitem [ref=e28]:
+                - button "Resources" [ref=e30] [cursor=pointer]:
+                  - text: Resources
+                  - img [ref=e31]
+              - listitem [ref=e33]:
+                - button "Open Source" [ref=e35] [cursor=pointer]:
+                  - text: Open Source
+                  - img [ref=e36]
+              - listitem [ref=e38]:
+                - button "Enterprise" [ref=e40] [cursor=pointer]:
+                  - text: Enterprise
+                  - img [ref=e41]
+              - listitem [ref=e43]:
+                - link "Pricing" [ref=e44] [cursor=pointer]:
+                  - /url: https://github.com/pricing
+                  - generic [ref=e45]: Pricing
+          - generic [ref=e46]:
+            - button "Search or jump to…" [ref=e49] [cursor=pointer]:
+              - img [ref=e51]
+            - link "Sign in" [ref=e54] [cursor=pointer]:
+              - /url: /login?return_to=https%3A%2F%2Fgithub.com%2Flangchain-ai%2Flanggraph
+            - link "Sign up" [ref=e55] [cursor=pointer]:
+              - /url: /signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F%3Cuser-name%3E%2F%3Crepo-name%3E&source=header-repo&source_repo=langchain-ai%2Flanggraph
+            - button "Appearance settings" [ref=e58] [cursor=pointer]:
+              - img
+  - main [ref=e62]:
+    - generic [ref=e63]:
+      - generic [ref=e64]:
+        - generic [ref=e66]:
+          - img [ref=e67]
+          - link "langchain-ai" [ref=e70] [cursor=pointer]:
+            - /url: /langchain-ai
+          - generic [ref=e71]: /
+          - strong [ref=e72]:
+            - link "langgraph" [ref=e73] [cursor=pointer]:
+              - /url: /langchain-ai/langgraph
+          - generic [ref=e74]: Public
+        - generic [ref=e75]:
+          - list:
+            - listitem [ref=e76]:
+              - link "You must be signed in to change notification settings" [ref=e77] [cursor=pointer]:
+                - /url: /login?return_to=%2Flangchain-ai%2Flanggraph
+                - img [ref=e78]
+                - text: Notifications
+            - listitem [ref=e80]:
+              - link "Fork 5.7k" [ref=e81] [cursor=pointer]:
+                - /url: /login?return_to=%2Flangchain-ai%2Flanggraph
+                - img [ref=e82]
+                - text: Fork
+                - generic "5,664" [ref=e84]: 5.7k
+            - listitem [ref=e85]:
+              - link "You must be signed in to star a repository" [ref=e87] [cursor=pointer]:
+                - /url: /login?return_to=%2Flangchain-ai%2Flanggraph
+                - img [ref=e88]
+                - text: Star
+                - generic "33636 users starred this repository" [ref=e90]: 33.6k
+      - navigation "Repository" [ref=e91]:
+        - list [ref=e92]:
+          - listitem [ref=e93]:
+            - link "Code" [ref=e94] [cursor=pointer]:
+              - /url: /langchain-ai/langgraph
+              - img [ref=e95]
+              - generic [ref=e97]: Code
+          - listitem [ref=e98]:
+            - link "Issues 321" [ref=e99] [cursor=pointer]:
+              - /url: /langchain-ai/langgraph/issues
+              - img [ref=e100]
+              - generic [ref=e103]: Issues
+              - generic "321" [ref=e104]
+          - listitem [ref=e105]:
+            - link "Pull requests 248" [ref=e106] [cursor=pointer]:
+              - /url: /langchain-ai/langgraph/pulls
+              - img [ref=e107]
+              - generic [ref=e109]: Pull requests
+              - generic "248" [ref=e110]
+          - listitem [ref=e111]:
+            - link "Actions" [ref=e112] [cursor=pointer]:
+              - /url: /langchain-ai/langgraph/actions
+              - img [ref=e113]
+              - generic [ref=e115]: Actions
+          - listitem [ref=e116]:
+            - link "Projects" [ref=e117] [cursor=pointer]:
+              - /url: /langchain-ai/langgraph/projects
+              - img [ref=e118]
+              - generic [ref=e120]: Projects
+          - listitem [ref=e121]:
+            - link "Security and quality 7" [ref=e122] [cursor=pointer]:
+              - /url: /langchain-ai/langgraph/security
+              - img [ref=e123]
+              - generic [ref=e125]: Security and quality
+              - generic "7" [ref=e126]
+          - listitem [ref=e127]:
+            - link "Insights" [ref=e128] [cursor=pointer]:
+              - /url: /langchain-ai/langgraph/pulse
+              - img [ref=e129]
+              - generic [ref=e131]: Insights
+    - generic [ref=e144]:
+      - heading "langchain-ai/langgraph" [level=1] [ref=e146]
+      - generic [ref=e147]:
+        - generic [ref=e150]:
+          - generic [ref=e151]:
+            - generic [ref=e152]:
+              - button "main branch" [ref=e154] [cursor=pointer]:
+                - generic [ref=e155]:
+                  - generic [ref=e157]:
+                    - img [ref=e159]
+                    - generic [ref=e162]: main
+                  - generic:
+                    - img
+              - generic [ref=e163]:
+                - link "312 Branches" [ref=e164] [cursor=pointer]:
+                  - /url: /langchain-ai/langgraph/branches
+                  - generic [ref=e165]:
+                    - generic:
+                      - img
+                    - generic [ref=e167]:
+                      - strong [ref=e168]: "312"
+                      - text: Branches
+                - link "554 Tags" [ref=e169] [cursor=pointer]:
+                  - /url: /langchain-ai/langgraph/tags
+                  - generic [ref=e170]:
+                    - generic:
+                      - img
+                    - generic [ref=e172]:
+                      - strong [ref=e173]: "554"
+                      - text: Tags
+            - generic [ref=e174]:
+              - generic [ref=e178]:
+                - img [ref=e180]
+                - combobox "Go to file" [ref=e182]
+              - button "Code" [ref=e183] [cursor=pointer]:
+                - generic [ref=e184]:
+                  - generic:
+                    - img
+                  - generic [ref=e185]: Code
+                  - generic:
+                    - img
+          - generic [ref=e186]:
+            - generic [ref=e187]:
+              - heading "Folders and files" [level=2] [ref=e188]
+              - table "Folders and files" [ref=e189]:
+                - rowgroup:
+                  - row "Name Last commit message Last commit date":
+                    - columnheader "Name"
+                    - columnheader "Last commit message":
+                      - generic "Last commit message"
+                    - columnheader "Last commit date":
+                      - generic "Last commit date"
+                - rowgroup [ref=e190]:
+                  - 'row "Latest commit nick-hollon-lc commits by nick-hollon-lc release(langgraph): 1.2.3 (#7945) success Commit 83dd61f · Jun 2, 202615 hours ago History 6,914 Commits" [ref=e191]':
+                    - 'cell "Latest commit nick-hollon-lc commits by nick-hollon-lc release(langgraph): 1.2.3 (#7945) success Commit 83dd61f · Jun 2, 202615 hours ago History 6,914 Commits" [ref=e192]':
+                      - generic [ref=e193]:
+                        - heading "Latest commit" [level=2] [ref=e194]
+                        - generic [ref=e195]:
+                          - generic [ref=e197]:
+                            - link "nick-hollon-lc" [ref=e198] [cursor=pointer]:
+                              - /url: /nick-hollon-lc
+                              - img "nick-hollon-lc" [ref=e199]
+                            - link "commits by nick-hollon-lc" [ref=e200] [cursor=pointer]:
+                              - /url: /langchain-ai/langgraph/commits?author=nick-hollon-lc
+                              - text: Nick Hollon (nick-hollon-lc)
+                          - generic [ref=e201]:
+                            - generic [ref=e203]:
+                              - 'link "release(langgraph): 1.2.3 (" [ref=e204] [cursor=pointer]':
+                                - /url: /langchain-ai/langgraph/commit/83dd61feaca993d2ee428706ad04c869895ce400
+                              - link "#7945" [ref=e205] [cursor=pointer]:
+                                - /url: https://github.com/langchain-ai/langgraph/pull/7945
+                              - link ")" [ref=e206] [cursor=pointer]:
+                                - /url: /langchain-ai/langgraph/commit/83dd61feaca993d2ee428706ad04c869895ce400
+                            - button "success" [ref=e207] [cursor=pointer]:
+                              - img [ref=e208]
+                        - generic [ref=e210]:
+                          - generic [ref=e212]:
+                            - link "Commit 83dd61f" [ref=e213] [cursor=pointer]:
+                              - /url: /langchain-ai/langgraph/commit/83dd61feaca993d2ee428706ad04c869895ce400
+                              - text: 83dd61f
+                            - text: ·
+                            - generic "Jun 2, 2026, 12:21 AM GMT+5:30" [ref=e214]: Jun 2, 202615 hours ago
+                          - generic [ref=e215]:
+                            - heading "History" [level=2] [ref=e216]
+                            - link "6,914 Commits" [ref=e217] [cursor=pointer]:
+                              - /url: /langchain-ai/langgraph/commits/main/
+                              - generic [ref=e218]:
+                                - generic:
+                                  - img
+                                - generic [ref=e219]: 6,914 Commits
+                  - 'row ".github, (Directory) feat(langgraph): add v3 streaming support to RemoteGraph (#7927) May 30, 20264 days ago" [ref=e220]':
+                    - cell ".github, (Directory)" [ref=e221]:
+                      - generic [ref=e222]:
+                        - img [ref=e223]
+                        - link ".github, (Directory)" [ref=e228] [cursor=pointer]:
+                          - /url: /langchain-ai/langgraph/tree/main/.github
+                          - text: .github
+                    - 'cell "feat(langgraph): add v3 streaming support to RemoteGraph (#7927)" [ref=e229]':
+                      - generic [ref=e231]:
+                        - 'link "feat(langgraph): add v3 streaming support to RemoteGraph (" [ref=e232] [cursor=pointer]':
+                          - /url: /langchain-ai/langgraph/commit/68fa011fc999610b824535058d146dbfd2e814ae
+                        - link "#7927" [ref=e233] [cursor=pointer]:
+                          - /url: https://github.com/langchain-ai/langgraph/pull/7927
+                        - link ")" [ref=e234] [cursor=pointer]:
+                          - /url: /langchain-ai/langgraph/commit/68fa011fc999610b824535058d146dbfd2e814ae
+                    - cell "May 30, 20264 days ago" [ref=e235]:
+                      - generic [ref=e236]: May 30, 20264 days ago
+                  - 'row "docs, (Directory) chore(docs): Add new redirects file(s) so we can update/add (#6778) Feb 19, 20264 months ago" [ref=e237]':
+                    - cell "docs, (Directory)" [ref=e238]:
+                      - generic [ref=e239]:
+                        - img [ref=e240]
+                        - link "docs, (Directory)" [ref=e245] [cursor=pointer]:
+                          - /url: /langchain-ai/langgraph/tree/main/docs
+                          - text: docs
+                    - 'cell "chore(docs): Add new redirects file(s) so we can update/add (#6778)" [ref=e246]':
+                      - generic [ref=e248]:
+                        - 'link "chore(docs): Add new redirects file(s) so we can update/add (" [ref=e249] [cursor=pointer]':
+                          - /url: /langchain-ai/langgraph/commit/c4f58611660543bf9341232eb971551654dcf5d0
+                        - link "#6778" [ref=e250] [cursor=pointer]:
+                          - /url: https://github.com/langchain-ai/langgraph/pull/6778
+                        - link ")" [ref=e251] [cursor=pointer]:
+                          - /url: /langchain-ai/langgraph/commit/c4f58611660543bf9341232eb971551654dcf5d0
+                    - cell "Feb 19, 20264 months ago" [ref=e252]:
+                      - generic [ref=e253]: Feb 19, 20264 months ago
+                  - 'row "examples, (Directory) docs: update notebook links and add archival notices for examples (#6720 Jan 26, 20265 months ago" [ref=e254]':
+                    - cell "examples, (Directory)" [ref=e255]:
+                      - generic [ref=e256]:
+                        - img [ref=e257]
+                        - link "examples, (Directory)" [ref=e262] [cursor=pointer]:
+                          - /url: /langchain-ai/langgraph/tree/main/examples
+                          - text: examples
+                    - 'cell "docs: update notebook links and add archival notices for examples (#6720" [ref=e263]':
+                      - generic [ref=e265]:
+                        - 'link "docs: update notebook links and add archival notices for examples (" [ref=e266] [cursor=pointer]':
+                          - /url: /langchain-ai/langgraph/commit/fbcb8a911b626b4373fd4aff9624124e9532987f
+                        - link "#6720" [ref=e267] [cursor=pointer]:
+                          - /url: https://github.com/langchain-ai/langgraph/pull/6720
+                    - cell "Jan 26, 20265 months ago" [ref=e268]:
+                      - generic [ref=e269]: Jan 26, 20265 months ago
+                  - 'row "libs, (Directory) release(langgraph): 1.2.3 (#7945) Jun 2, 202615 hours ago" [ref=e270]':
+                    - cell "libs, (Directory)" [ref=e271]:
+                      - generic [ref=e272]:
+                        - img [ref=e273]
+                        - link "libs, (Directory)" [ref=e278] [cursor=pointer]:
+                          - /url: /langchain-ai/langgraph/tree/main/libs
+                          - text: libs
+                    - 'cell "release(langgraph): 1.2.3 (#7945)" [ref=e279]':
+                      - generic [ref=e281]:
+                        - 'link "release(langgraph): 1.2.3 (" [ref=e282] [cursor=pointer]':
+                          - /url: /langchain-ai/langgraph/commit/83dd61feaca993d2ee428706ad04c869895ce400
+                        - link "#7945" [ref=e283] [cursor=pointer]:
+                          - /url: https://github.com/langchain-ai/langgraph/pull/7945
+                        - link ")" [ref=e284] [cursor=pointer]:
+                          - /url: /langchain-ai/langgraph/commit/83dd61feaca993d2ee428706ad04c869895ce400
+                    - cell "Jun 2, 202615 hours ago" [ref=e285]:
+                      - generic [ref=e286]: Jun 2, 202615 hours ago
+                  - 'row ".gitignore, (File) feat(langgraph): DeltaChannel: store sentinel in blobs, reconstruct… Apr 30, 20262 months ago" [ref=e287]':
+                    - cell ".gitignore, (File)" [ref=e288]:
+                      - generic [ref=e289]:
+                        - img [ref=e290]
+                        - link ".gitignore, (File)" [ref=e295] [cursor=pointer]:
+                          - /url: /langchain-ai/langgraph/blob/main/.gitignore
+                          - text: .gitignore
+                    - 'cell "feat(langgraph): DeltaChannel: store sentinel in blobs, reconstruct…" [ref=e296]':
+                      - 'link "feat(langgraph): DeltaChannel: store sentinel in blobs, reconstruct…" [ref=e299] [cursor=pointer]':
+                        - /url: /langchain-ai/langgraph/commit/5c18bde0f889b7dd24965906fed8e091adf71a25
+                        - text: "feat(langgraph):"
+                        - code [ref=e300]: DeltaChannel
+                        - text: ": store sentinel in blobs, reconstruct…"
+                    - cell "Apr 30, 20262 months ago" [ref=e301]:
+                      - generic [ref=e302]: Apr 30, 20262 months ago
+                  - 'row ".markdownlint.json, (File) docs: restyle README.md to match langchain repo layout (#7187) Mar 16, 20263 months ago" [ref=e303]':
+                    - cell ".markdownlint.json, (File)" [ref=e304]:
+                      - generic [ref=e305]:
+                        - img [ref=e306]
+                        - link ".markdownlint.json, (File)" [ref=e311] [cursor=pointer]:
+                          - /url: /langchain-ai/langgraph/blob/main/.markdownlint.json
+                          - text: .markdownlint.json
+                    - 'cell "docs: restyle README.md to match langchain repo layout (#7187)" [ref=e312]':
+                      - generic [ref=e314]:
+                        - 'link "docs: restyle" [ref=e315] [cursor=pointer]':
+                          - /url: /langchain-ai/langgraph/commit/fd8cef77cec3233e7030c02889f3b154aea842e1
+                        - code [ref=e316]:
+                          - link "README.md" [ref=e317] [cursor=pointer]:
+                            - /url: /langchain-ai/langgraph/commit/fd8cef77cec3233e7030c02889f3b154aea842e1
+                        - link "to match langchain repo layout (" [ref=e318] [cursor=pointer]:
+                          - /url: /langchain-ai/langgraph/commit/fd8cef77cec3233e7030c02889f3b154aea842e1
+                        - link "#7187" [ref=e319] [cursor=pointer]:
+                          - /url: https://github.com/langchain-ai/langgraph/pull/7187
+                        - link ")" [ref=e320] [cursor=pointer]:
+                          - /url: /langchain-ai/langgraph/commit/fd8cef77cec3233e7030c02889f3b154aea842e1
+                    - cell "Mar 16, 20263 months ago" [ref=e321]:
+                      - generic [ref=e322]: Mar 16, 20263 months ago
+                  - 'row "AGENTS.md, (File) chore(infra): update AGENTS.md for inline code formatting guidelines ( Feb 6, 20264 months ago" [ref=e323]':
+                    - cell "AGENTS.md, (File)" [ref=e324]:
+                      - generic [ref=e325]:
+                        - img [ref=e326]
+                        - link "AGENTS.md, (File)" [ref=e331] [cursor=pointer]:
+                          - /url: /langchain-ai/langgraph/blob/main/AGENTS.md
+                          - text: AGENTS.md
+                    - 'cell "chore(infra): update AGENTS.md for inline code formatting guidelines (" [ref=e332]':
+                      - 'link "chore(infra): update AGENTS.md for inline code formatting guidelines (" [ref=e335] [cursor=pointer]':
+                        - /url: /langchain-ai/langgraph/commit/f688b068e7f06111fc69ee70adc1b66c75fa5a93
+                        - text: "chore(infra): update"
+                        - code [ref=e336]: AGENTS.md
+                        - text: for inline code formatting guidelines (
+                    - cell "Feb 6, 20264 months ago" [ref=e337]:
+                      - generic [ref=e338]: Feb 6, 20264 months ago
+                  - 'row "CLAUDE.md, (File) chore(infra): update AGENTS.md for inline code formatting guidelines ( Feb 6, 20264 months ago" [ref=e339]':
+                    - cell "CLAUDE.md, (File)" [ref=e340]:
+                      - generic [ref=e341]:
+                        - img [ref=e342]
+                        - link "CLAUDE.md, (File)" [ref=e347] [cursor=pointer]:
+                          - /url: /langchain-ai/langgraph/blob/main/CLAUDE.md
+                          - text: CLAUDE.md
+                    - 'cell "chore(infra): update AGENTS.md for inline code formatting guidelines (" [ref=e348]':
+                      - 'link "chore(infra): update AGENTS.md for inline code formatting guidelines (" [ref=e351] [cursor=pointer]':
+                        - /url: /langchain-ai/langgraph/commit/f688b068e7f06111fc69ee70adc1b66c75fa5a93
+                        - text: "chore(infra): update"
+                        - code [ref=e352]: AGENTS.md
+                        - text: for inline code formatting guidelines (
+                    - cell "Feb 6, 20264 months ago" [ref=e353]:
+                      - generic [ref=e354]: Feb 6, 20264 months ago
+                  - 'row "LICENSE, (File) libs: add cli, sdk-py, sdk-js and move core langgraph Jun 18, 20242 years ago" [ref=e355]':
+                    - cell "LICENSE, (File)" [ref=e356]:
+                      - generic [ref=e357]:
+                        - img [ref=e358]
+                        - link "LICENSE, (File)" [ref=e363] [cursor=pointer]:
+                          - /url: /langchain-ai/langgraph/blob/main/LICENSE
+                          - text: LICENSE
+                    - 'cell "libs: add cli, sdk-py, sdk-js and move core langgraph" [ref=e364]':
+                      - 'link "libs: add cli, sdk-py, sdk-js and move core langgraph" [ref=e367] [cursor=pointer]':
+                        - /url: /langchain-ai/langgraph/commit/1a06d500d4282cfdb2ae9d7748bb570e8162acdf
+                    - cell "Jun 18, 20242 years ago" [ref=e368]:
+                      - generic [ref=e369]: Jun 18, 20242 years ago
+                  - 'row "Makefile, (File) ci: add automated uv lock --upgrade workflow (#5307) Jul 2, 2025last year" [ref=e370]':
+                    - cell "Makefile, (File)" [ref=e371]:
+                      - generic [ref=e372]:
+                        - img [ref=e373]
+                        - link "Makefile, (File)" [ref=e378] [cursor=pointer]:
+                          - /url: /langchain-ai/langgraph/blob/main/Makefile
+                          - text: Makefile
+                    - 'cell "ci: add automated uv lock --upgrade workflow (#5307)" [ref=e379]':
+                      - generic [ref=e381]:
+                        - 'link "ci: add automated" [ref=e382] [cursor=pointer]':
+                          - /url: /langchain-ai/langgraph/commit/b3708bd7f66675f7a04bf9950c33d495c49cd843
+                        - code [ref=e383]:
+                          - link "uv lock --upgrade" [ref=e384] [cursor=pointer]:
+                            - /url: /langchain-ai/langgraph/commit/b3708bd7f66675f7a04bf9950c33d495c49cd843
+                        - link "workflow (" [ref=e385] [cursor=pointer]:
+                          - /url: /langchain-ai/langgraph/commit/b3708bd7f66675f7a04bf9950c33d495c49cd843
+                        - link "#5307" [ref=e386] [cursor=pointer]:
+                          - /url: https://github.com/langchain-ai/langgraph/pull/5307
+                        - link ")" [ref=e387] [cursor=pointer]:
+                          - /url: /langchain-ai/langgraph/commit/b3708bd7f66675f7a04bf9950c33d495c49cd843
+                    - cell "Jul 2, 2025last year" [ref=e388]:
+                      - generic [ref=e389]: Jul 2, 2025last year
+                  - 'row "README.md, (File) docs: update README.md (#7710) May 5, 2026last month" [ref=e390]':
+                    - cell "README.md, (File)" [ref=e391]:
+                      - generic [ref=e392]:
+                        - img [ref=e393]
+                        - link "README.md, (File)" [ref=e398] [cursor=pointer]:
+                          - /url: /langchain-ai/langgraph/blob/main/README.md
+                          - text: README.md
+                    - 'cell "docs: update README.md (#7710)" [ref=e399]':
+                      - generic [ref=e401]:
+                        - 'link "docs: update README.md (" [ref=e402] [cursor=pointer]':
+                          - /url: /langchain-ai/langgraph/commit/37014c09b9fafbfec9f336da80d8624d75a9ff7f
+                        - link "#7710" [ref=e403] [cursor=pointer]:
+                          - /url: https://github.com/langchain-ai/langgraph/pull/7710
+                        - link ")" [ref=e404] [cursor=pointer]:
+                          - /url: /langchain-ai/langgraph/commit/37014c09b9fafbfec9f336da80d8624d75a9ff7f
+                    - cell "May 5, 2026last month" [ref=e405]:
+                      - generic [ref=e406]: May 5, 2026last month
+            - generic [ref=e408]:
+              - generic [ref=e409]:
+                - heading "Repository files navigation" [level=2] [ref=e410]
+                - navigation "Repository files" [ref=e411]:
+                  - list [ref=e412]:
+                    - listitem [ref=e413]:
+                      - link "README" [ref=e414] [cursor=pointer]:
+                        - /url: "#"
+                        - img [ref=e416]
+                        - generic [ref=e418]: README
+                    - listitem [ref=e419]:
+                      - link "Code of conduct" [ref=e420] [cursor=pointer]:
+                        - /url: "#"
+                        - img [ref=e422]
+                        - generic [ref=e424]: Code of conduct
+                    - listitem [ref=e425]:
+                      - link "Contributing" [ref=e426] [cursor=pointer]:
+                        - /url: "#"
+                        - img [ref=e428]
+                        - generic [ref=e430]: Contributing
+                    - listitem [ref=e431]:
+                      - link "MIT license" [ref=e432] [cursor=pointer]:
+                        - /url: "#"
+                        - img [ref=e434]
+                        - generic [ref=e436]: MIT license
+                    - listitem [ref=e437]:
+                      - link "Security" [ref=e438] [cursor=pointer]:
+                        - /url: "#"
+                        - img [ref=e440]
+                        - generic [ref=e442]: Security
+                - button "Outline" [ref=e443] [cursor=pointer]:
+                  - img [ref=e444]
+              - article [ref=e447]:
+                - link "LangGraph Logo" [ref=e449] [cursor=pointer]:
+                  - /url: https://www.langchain.com/langgraph
+                  - img "LangGraph Logo" [ref=e452]
+                - generic [ref=e454]:
+                  - heading "Low-level orchestration framework for building stateful agents." [level=3] [ref=e455]
+                  - 'link "Permalink: Low-level orchestration framework for building stateful agents." [ref=e456] [cursor=pointer]':
+                    - /url: "#low-level-orchestration-framework-for-building-stateful-agents"
+                    - img [ref=e457]
+                - generic [ref=e459]:
+                  - link "PyPI - License" [ref=e460] [cursor=pointer]:
+                    - /url: https://opensource.org/licenses/MIT
+                    - img "PyPI - License" [ref=e461]
+                  - link "PyPI - Downloads" [ref=e462] [cursor=pointer]:
+                    - /url: https://pypistats.org/packages/langgraph
+                    - img "PyPI - Downloads" [ref=e463]
+                  - link "Version" [ref=e464] [cursor=pointer]:
+                    - /url: https://pypi.org/project/langgraph/
+                    - img "Version" [ref=e465]
+                  - link "Twitter / X" [ref=e466] [cursor=pointer]:
+                    - /url: https://x.com/langchain_oss
+                    - img "Twitter / X" [ref=e467]
+                - paragraph [ref=e468]: Trusted by companies shaping the future of agents – including Klarna, Replit, Elastic, and more – LangGraph is a low-level orchestration framework for building, managing, and deploying long-running, stateful agents.
+                - generic [ref=e469]:
+                  - generic [ref=e470]: pip install -U langgraph
+                  - button "Copy code to clipboard" [ref=e472] [cursor=pointer]:
+                    - img [ref=e473]
+                - generic [ref=e476]:
+                  - paragraph [ref=e477]:
+                    - img [ref=e478]
+                    - text: Tip
+                  - paragraph [ref=e480]:
+                    - text: If you're looking to quickly build agents, check out
+                    - strong [ref=e481]:
+                      - link "Deep Agents" [ref=e482] [cursor=pointer]:
+                        - /url: https://docs.langchain.com/oss/python/deepagents/overview
+                    - text: — a higher-level package built on LangGraph for agents that can plan, use subagents, and leverage file systems for complex tasks.
+                - paragraph [ref=e483]:
+                  - text: For an equivalent JS/TS library, check out
+                  - link "LangGraph.js" [ref=e484] [cursor=pointer]:
+                    - /url: https://github.com/langchain-ai/langgraphjs
+                  - text: and the
+                  - link "JS docs" [ref=e485] [cursor=pointer]:
+                    - /url: https://docs.langchain.com/oss/javascript/langgraph/overview
+                  - text: .
+                - generic [ref=e486]:
+                  - heading "Why use LangGraph?" [level=2] [ref=e487]
+                  - 'link "Permalink: Why use LangGraph?" [ref=e488] [cursor=pointer]':
+                    - /url: "#why-use-langgraph"
+                    - img [ref=e489]
+                - paragraph [ref=e491]:
+                  - text: LangGraph provides low-level supporting infrastructure for
+                  - emphasis [ref=e492]: any
+                  - text: "long-running, stateful workflow or agent:"
+                - list [ref=e493]:
+                  - listitem [ref=e494]:
+                    - strong [ref=e495]:
+                      - link "Durable execution" [ref=e496] [cursor=pointer]:
+                        - /url: https://docs.langchain.com/oss/python/langgraph/durable-execution
+                    - text: — Build agents that persist through failures and can run for extended periods, automatically resuming from exactly where they left off.
+                  - listitem [ref=e497]:
+                    - strong [ref=e498]:
+                      - link "Human-in-the-loop" [ref=e499] [cursor=pointer]:
+                        - /url: https://docs.langchain.com/oss/python/langgraph/interrupts
+                    - text: — Seamlessly incorporate human oversight by inspecting and modifying agent state at any point during execution.
+                  - listitem [ref=e500]:
+                    - strong [ref=e501]:
+                      - link "Comprehensive memory" [ref=e502] [cursor=pointer]:
+                        - /url: https://docs.langchain.com/oss/python/langgraph/memory
+                    - text: — Create truly stateful agents with both short-term working memory for ongoing reasoning and long-term persistent memory across sessions.
+                  - listitem [ref=e503]:
+                    - strong [ref=e504]:
+                      - link "Debugging with LangSmith" [ref=e505] [cursor=pointer]:
+                        - /url: https://www.langchain.com/langsmith
+                    - text: — Gain deep visibility into complex agent behavior with visualization tools that trace execution paths, capture state transitions, and provide detailed runtime metrics.
+                  - listitem [ref=e506]:
+                    - strong [ref=e507]:
+                      - link "Production-ready deployment" [ref=e508] [cursor=pointer]:
+                        - /url: https://docs.langchain.com/langsmith/deployments
+                    - text: — Deploy sophisticated agent systems confidently with scalable infrastructure designed to handle the unique challenges of stateful, long-running workflows.
+                - generic [ref=e509]:
+                  - paragraph [ref=e510]:
+                    - img [ref=e511]
+                    - text: Tip
+                  - paragraph [ref=e513]:
+                    - text: For developing, debugging, and deploying AI agents and LLM applications, see
+                    - link "LangSmith" [ref=e514] [cursor=pointer]:
+                      - /url: https://docs.langchain.com/langsmith/home
+                    - text: .
+                - generic [ref=e515]:
+                  - heading "LangGraph ecosystem" [level=2] [ref=e516]
+                  - 'link "Permalink: LangGraph ecosystem" [ref=e517] [cursor=pointer]':
+                    - /url: "#langgraph-ecosystem"
+                    - img [ref=e518]
+                - paragraph [ref=e520]: While LangGraph can be used standalone, it also integrates seamlessly with any LangChain product, giving developers a full suite of tools for building agents.
+                - paragraph [ref=e521]: "To improve your LLM application development, pair LangGraph with:"
+                - list [ref=e522]:
+                  - listitem [ref=e523]:
+                    - link "Deep Agents" [ref=e524] [cursor=pointer]:
+                      - /url: https://docs.langchain.com/oss/python/deepagents/overview
+                    - text: – Build agents that can plan, use subagents, and leverage file systems for complex tasks.
+                  - listitem [ref=e525]:
+                    - link "LangChain" [ref=e526] [cursor=pointer]:
+                      - /url: https://docs.langchain.com/oss/python/langchain/overview
+                    - text: – Provides integrations and composable components to streamline LLM application development.
+                  - listitem [ref=e527]:
+                    - link "LangSmith" [ref=e528] [cursor=pointer]:
+                      - /url: https://www.langchain.com/langsmith
+                    - text: – Helpful for agent evals and observability. Debug poor-performing LLM app runs, evaluate agent trajectories, gain visibility in production, and improve performance over time.
+                  - listitem [ref=e529]:
+                    - link "LangSmith Deployment" [ref=e530] [cursor=pointer]:
+                      - /url: https://docs.langchain.com/langsmith/deployments
+                    - text: – Deploy and scale agents effortlessly with a purpose-built deployment platform for long-running, stateful workflows. Discover, reuse, configure, and share agents across teams – and iterate quickly with visual prototyping in
+                    - link "LangSmith Studio" [ref=e531] [cursor=pointer]:
+                      - /url: https://docs.langchain.com/langsmith/studio
+                    - text: .
+                - separator [ref=e532]
+                - generic [ref=e533]:
+                  - heading "Documentation" [level=2] [ref=e534]
+                  - 'link "Permalink: Documentation" [ref=e535] [cursor=pointer]':
+                    - /url: "#documentation"
+                    - img [ref=e536]
+                - list [ref=e538]:
+                  - listitem [ref=e539]:
+                    - link "docs.langchain.com" [ref=e540] [cursor=pointer]:
+                      - /url: https://docs.langchain.com/oss/python/langgraph/overview
+                    - text: – Comprehensive documentation, including conceptual overviews and guides
+                  - listitem [ref=e541]:
+                    - link "reference.langchain.com/python/langgraph" [ref=e542] [cursor=pointer]:
+                      - /url: https://reference.langchain.com/python/langgraph
+                    - text: – API reference docs for LangGraph packages
+                  - listitem [ref=e543]:
+                    - link "LangGraph Quickstart" [ref=e544] [cursor=pointer]:
+                      - /url: https://docs.langchain.com/oss/python/langgraph/quickstart
+                    - text: – Get started building with LangGraph
+                  - listitem [ref=e545]:
+                    - link "Chat LangChain" [ref=e546] [cursor=pointer]:
+                      - /url: https://chat.langchain.com/
+                    - text: – Chat with the LangChain documentation and get answers to your questions
+                - paragraph [ref=e547]:
+                  - strong [ref=e548]: Discussions
+                  - text: ": Visit the"
+                  - link "LangChain Forum" [ref=e549] [cursor=pointer]:
+                    - /url: https://forum.langchain.com
+                  - text: to connect with the community and share all of your technical questions, ideas, and feedback.
+                - generic [ref=e550]:
+                  - heading "Additional resources" [level=2] [ref=e551]
+                  - 'link "Permalink: Additional resources" [ref=e552] [cursor=pointer]':
+                    - /url: "#additional-resources"
+                    - img [ref=e553]
+                - list [ref=e555]:
+                  - listitem [ref=e556]:
+                    - strong [ref=e557]:
+                      - link "Guides" [ref=e558] [cursor=pointer]:
+                        - /url: https://docs.langchain.com/oss/python/learn
+                    - text: – Quick, actionable code snippets for topics such as streaming, adding memory & persistence, and design patterns (e.g. branching, subgraphs, etc.).
+                  - listitem [ref=e559]:
+                    - strong [ref=e560]:
+                      - link "LangChain Academy" [ref=e561] [cursor=pointer]:
+                        - /url: https://academy.langchain.com/courses/intro-to-langgraph
+                    - text: – Learn the basics of LangGraph in our free, structured course.
+                  - listitem [ref=e562]:
+                    - strong [ref=e563]:
+                      - link "Case studies" [ref=e564] [cursor=pointer]:
+                        - /url: https://www.langchain.com/built-with-langgraph
+                    - text: – Hear how industry leaders use LangGraph to ship AI applications at scale.
+                  - listitem [ref=e565]:
+                    - link "Contributing Guide" [ref=e566] [cursor=pointer]:
+                      - /url: https://docs.langchain.com/oss/python/contributing/overview
+                    - text: – Learn how to contribute to LangChain projects and find good first issues.
+                  - listitem [ref=e567]:
+                    - link "Code of Conduct" [ref=e568] [cursor=pointer]:
+                      - /url: https://github.com/langchain-ai/langchain/?tab=coc-ov-file
+                    - text: – Our community guidelines and standards for participation.
+                - separator [ref=e569]
+                - generic [ref=e570]:
+                  - heading "Acknowledgements" [level=2] [ref=e571]
+                  - 'link "Permalink: Acknowledgements" [ref=e572] [cursor=pointer]':
+                    - /url: "#acknowledgements"
+                    - img [ref=e573]
+                - paragraph [ref=e575]:
+                  - text: LangGraph is inspired by
+                  - link "Pregel" [ref=e576] [cursor=pointer]:
+                    - /url: https://research.google/pubs/pub37252/
+                  - text: and
+                  - link "Apache Beam" [ref=e577] [cursor=pointer]:
+                    - /url: https://beam.apache.org/
+                  - text: . The public interface draws inspiration from
+                  - link "NetworkX" [ref=e578] [cursor=pointer]:
+                    - /url: https://networkx.org/documentation/latest/
+                  - text: . LangGraph is built by LangChain Inc, the creators of LangChain, but can be used without LangChain.
+        - generic [ref=e582]:
+          - generic [ref=e585]:
+            - heading "About" [level=2] [ref=e586]
+            - paragraph [ref=e587]: Build resilient agents.
+            - generic [ref=e588]:
+              - img [ref=e589]
+              - link "docs.langchain.com/oss/python/langgraph/" [ref=e592] [cursor=pointer]:
+                - /url: https://docs.langchain.com/oss/python/langgraph/
+            - heading "Topics" [level=3] [ref=e593]
+            - generic [ref=e595]:
+              - link "python" [ref=e596] [cursor=pointer]:
+                - /url: /topics/python
+              - link "open-source" [ref=e597] [cursor=pointer]:
+                - /url: /topics/open-source
+              - link "enterprise" [ref=e598] [cursor=pointer]:
+                - /url: /topics/enterprise
+              - link "framework" [ref=e599] [cursor=pointer]:
+                - /url: /topics/framework
+              - link "ai" [ref=e600] [cursor=pointer]:
+                - /url: /topics/ai
+              - link "gemini" [ref=e601] [cursor=pointer]:
+                - /url: /topics/gemini
+              - link "openai" [ref=e602] [cursor=pointer]:
+                - /url: /topics/openai
+              - link "multiagent" [ref=e603] [cursor=pointer]:
+                - /url: /topics/multiagent
+              - link "agents" [ref=e604] [cursor=pointer]:
+                - /url: /topics/agents
+              - link "ai-agents" [ref=e605] [cursor=pointer]:
+                - /url: /topics/ai-agents
+              - link "rag" [ref=e606] [cursor=pointer]:
+                - /url: /topics/rag
+              - link "pydantic" [ref=e607] [cursor=pointer]:
+                - /url: /topics/pydantic
+              - link "llm" [ref=e608] [cursor=pointer]:
+                - /url: /topics/llm
+              - link "generative-ai" [ref=e609] [cursor=pointer]:
+                - /url: /topics/generative-ai
+              - link "chatgpt" [ref=e610] [cursor=pointer]:
+                - /url: /topics/chatgpt
+              - link "langchain" [ref=e611] [cursor=pointer]:
+                - /url: /topics/langchain
+              - link "langgraph" [ref=e612] [cursor=pointer]:
+                - /url: /topics/langgraph
+              - link "deepagents" [ref=e613] [cursor=pointer]:
+                - /url: /topics/deepagents
+            - heading "Resources" [level=3] [ref=e614]
+            - link "Readme" [ref=e616] [cursor=pointer]:
+              - /url: "#readme-ov-file"
+              - img [ref=e617]
+              - text: Readme
+            - heading "License" [level=3] [ref=e619]
+            - link "MIT license" [ref=e621] [cursor=pointer]:
+              - /url: "#MIT-1-ov-file"
+              - img [ref=e622]
+              - text: MIT license
+            - heading "Code of conduct" [level=3] [ref=e624]
+            - link "Code of conduct" [ref=e626] [cursor=pointer]:
+              - /url: "#coc-ov-file"
+              - img [ref=e627]
+              - text: Code of conduct
+            - heading "Contributing" [level=3] [ref=e629]
+            - link "Contributing" [ref=e631] [cursor=pointer]:
+              - /url: "#contributing-ov-file"
+              - img [ref=e632]
+              - text: Contributing
+            - heading "Security policy" [level=3] [ref=e634]
+            - link "Security policy" [ref=e636] [cursor=pointer]:
+              - /url: "#security-ov-file"
+              - img [ref=e637]
+              - text: Security policy
+            - link "Activity" [ref=e640] [cursor=pointer]:
+              - /url: /langchain-ai/langgraph/activity
+              - img [ref=e641]
+              - text: Activity
+            - link "Custom properties" [ref=e644] [cursor=pointer]:
+              - /url: /langchain-ai/langgraph/custom-properties
+              - img [ref=e645]
+              - text: Custom properties
+            - heading "Stars" [level=3] [ref=e647]
+            - link "33.6k stars" [ref=e649] [cursor=pointer]:
+              - /url: /langchain-ai/langgraph/stargazers
+              - img [ref=e650]
+              - strong [ref=e652]: 33.6k
+              - text: stars
+            - heading "Watchers" [level=3] [ref=e653]
+            - link "154 watching" [ref=e655] [cursor=pointer]:
+              - /url: /langchain-ai/langgraph/watchers
+              - img [ref=e656]
+              - strong [ref=e658]: "154"
+              - text: watching
+            - heading "Forks" [level=3] [ref=e659]
+            - link "5.7k forks" [ref=e661] [cursor=pointer]:
+              - /url: /langchain-ai/langgraph/forks
+              - img [ref=e662]
+              - strong [ref=e664]: 5.7k
+              - text: forks
+            - link "Report repository" [ref=e666] [cursor=pointer]:
+              - /url: /contact/report-content?content_url=https%3A%2F%2Fgithub.com%2Flangchain-ai%2Flanggraph&report=langchain-ai+%28user%29
+          - generic [ref=e668]:
+            - heading "Releases 543" [level=2] [ref=e669]:
+              - link "Releases 543" [ref=e670] [cursor=pointer]:
+                - /url: /langchain-ai/langgraph/releases
+                - text: Releases
+                - generic "543" [ref=e671]
+            - link "langgraph==1.2.3 Latest Jun 1, 202615 hours ago" [ref=e672] [cursor=pointer]:
+              - /url: /langchain-ai/langgraph/releases/tag/1.2.3
+              - img [ref=e673]
+              - generic [ref=e675]:
+                - generic [ref=e676]:
+                  - generic [ref=e677]: langgraph==1.2.3
+                  - 'generic "Label: Latest" [ref=e678]': Latest
+                - generic [ref=e679]: Jun 1, 202615 hours ago
+            - link "+ 542 releases" [ref=e681] [cursor=pointer]:
+              - /url: /langchain-ai/langgraph/releases
+          - generic [ref=e683]:
+            - heading "Used by 39.9k" [level=2] [ref=e684]:
+              - link "Used by 39.9k" [ref=e685] [cursor=pointer]:
+                - /url: /langchain-ai/langgraph/network/dependents
+                - text: Used by
+                - generic "39,910" [ref=e686]: 39.9k
+            - link "@king-wang-jjang @seoyeon208 @q9void @pondzikk @lasmcode @California-Community-College-Tech-Group @Fanalogy @BayazidHabibSiddikee + 39,902" [ref=e687] [cursor=pointer]:
+              - /url: /langchain-ai/langgraph/network/dependents
+              - list [ref=e688]:
+                - listitem [ref=e689]:
+                  - img "@king-wang-jjang" [ref=e690]
+                - listitem [ref=e691]:
+                  - img "@seoyeon208" [ref=e692]
+                - listitem [ref=e693]:
+                  - img "@q9void" [ref=e694]
+                - listitem [ref=e695]:
+                  - img "@pondzikk" [ref=e696]
+                - listitem [ref=e697]:
+                  - img "@lasmcode" [ref=e698]
+                - listitem [ref=e699]:
+                  - img "@California-Community-College-Tech-Group" [ref=e700]
+                - listitem [ref=e701]:
+                  - img "@Fanalogy" [ref=e702]
+                - listitem [ref=e703]:
+                  - img "@BayazidHabibSiddikee" [ref=e704]
+              - generic [ref=e705]: + 39,902
+          - generic [ref=e707]:
+            - heading "Contributors 295" [level=2] [ref=e708]:
+              - link "Contributors 295" [ref=e709] [cursor=pointer]:
+                - /url: /langchain-ai/langgraph/graphs/contributors
+                - text: Contributors
+                - generic "295" [ref=e710]
+            - list [ref=e711]:
+              - listitem [ref=e712]:
+                - link "@nfcampos" [ref=e713] [cursor=pointer]:
+                  - /url: https://github.com/nfcampos
+                  - img "@nfcampos" [ref=e714]
+              - listitem [ref=e715]:
+                - link "@hinthornw" [ref=e716] [cursor=pointer]:
+                  - /url: https://github.com/hinthornw
+                  - img "@hinthornw" [ref=e717]
+              - listitem [ref=e718]:
+                - link "@dqbd" [ref=e719] [cursor=pointer]:
+                  - /url: https://github.com/dqbd
+                  - img "@dqbd" [ref=e720]
+              - listitem [ref=e721]:
+                - link "@eyurtsev" [ref=e722] [cursor=pointer]:
+                  - /url: https://github.com/eyurtsev
+                  - img "@eyurtsev" [ref=e723]
+              - listitem [ref=e724]:
+                - link "@sydney-runkle" [ref=e725] [cursor=pointer]:
+                  - /url: https://github.com/sydney-runkle
+                  - img "@sydney-runkle" [ref=e726]
+              - listitem [ref=e727]:
+                - link "@dependabot[bot]" [ref=e728] [cursor=pointer]:
+                  - /url: https://github.com/apps/dependabot
+                  - img "@dependabot[bot]" [ref=e729]
+              - listitem [ref=e730]:
+                - link "@andrewnguonly" [ref=e731] [cursor=pointer]:
+                  - /url: https://github.com/andrewnguonly
+                  - img "@andrewnguonly" [ref=e732]
+              - listitem [ref=e733]:
+                - link "@hwchase17" [ref=e734] [cursor=pointer]:
+                  - /url: https://github.com/hwchase17
+                  - img "@hwchase17" [ref=e735]
+              - listitem [ref=e736]:
+                - link "@isahers1" [ref=e737] [cursor=pointer]:
+                  - /url: https://github.com/isahers1
+                  - img "@isahers1" [ref=e738]
+              - listitem [ref=e739]:
+                - link "@lnhsingh" [ref=e740] [cursor=pointer]:
+                  - /url: https://github.com/lnhsingh
+                  - img "@lnhsingh" [ref=e741]
+              - listitem [ref=e742]:
+                - link "@ccurme" [ref=e743] [cursor=pointer]:
+                  - /url: https://github.com/ccurme
+                  - img "@ccurme" [ref=e744]
+              - listitem [ref=e745]:
+                - link "@rlancemartin" [ref=e746] [cursor=pointer]:
+                  - /url: https://github.com/rlancemartin
+                  - img "@rlancemartin" [ref=e747]
+              - listitem [ref=e748]:
+                - link "@bracesproul" [ref=e749] [cursor=pointer]:
+                  - /url: https://github.com/bracesproul
+                  - img "@bracesproul" [ref=e750]
+              - listitem [ref=e751]:
+                - link "@lc-arjun" [ref=e752] [cursor=pointer]:
+                  - /url: https://github.com/lc-arjun
+                  - img "@lc-arjun" [ref=e753]
+            - link "+ 281 contributors" [ref=e755] [cursor=pointer]:
+              - /url: /langchain-ai/langgraph/graphs/contributors
+          - generic [ref=e757]:
+            - heading "Languages" [level=2] [ref=e758]
+            - list [ref=e763]:
+              - listitem [ref=e764]:
+                - link "Python 99.6%" [ref=e765] [cursor=pointer]:
+                  - /url: /langchain-ai/langgraph/search?l=python
+                  - img [ref=e766]
+                  - generic [ref=e768]: Python
+                  - generic [ref=e769]: 99.6%
+              - listitem [ref=e770]:
+                - generic [ref=e771]:
+                  - img [ref=e772]
+                  - generic [ref=e774]: Other
+                  - generic [ref=e775]: 0.4%
+  - contentinfo [ref=e777]:
+    - heading "Footer" [level=2] [ref=e778]
+    - generic [ref=e779]:
+      - generic [ref=e780]:
+        - link "GitHub Homepage" [ref=e781] [cursor=pointer]:
+          - /url: https://github.com
+          - img [ref=e782]
+        - generic [ref=e784]: © 2026 GitHub, Inc.
+      - navigation "Footer" [ref=e785]:
+        - heading "Footer navigation" [level=3] [ref=e786]
+        - list "Footer navigation" [ref=e787]:
+          - listitem [ref=e788]:
+            - link "Terms" [ref=e789] [cursor=pointer]:
+              - /url: https://docs.github.com/site-policy/github-terms/github-terms-of-service
+          - listitem [ref=e790]:
+            - link "Privacy" [ref=e791] [cursor=pointer]:
+              - /url: https://docs.github.com/site-policy/privacy-policies/github-privacy-statement
+          - listitem [ref=e792]:
+            - link "Security" [ref=e793] [cursor=pointer]:
+              - /url: https://github.com/security
+          - listitem [ref=e794]:
+            - link "Status" [ref=e795] [cursor=pointer]:
+              - /url: https://www.githubstatus.com/
+          - listitem [ref=e796]:
+            - link "Community" [ref=e797] [cursor=pointer]:
+              - /url: https://github.community/
+          - listitem [ref=e798]:
+            - link "Docs" [ref=e799] [cursor=pointer]:
+              - /url: https://docs.github.com/
+          - listitem [ref=e800]:
+            - link "Contact" [ref=e801] [cursor=pointer]:
+              - /url: https://support.github.com?tags=dotcom-footer
+          - listitem [ref=e802]:
+            - button "Manage cookies" [ref=e804] [cursor=pointer]
+          - listitem [ref=e805]:
+            - button "Do not share my personal information" [ref=e807] [cursor=pointer]

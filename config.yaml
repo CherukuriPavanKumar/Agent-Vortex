@@ -1,0 +1,5 @@
+llm:
+  model: "poolside/laguna-xs.2:free"
+  temperature: 1.0
+  timeout: 120
+  max_retries: 3
