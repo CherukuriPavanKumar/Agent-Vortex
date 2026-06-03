@@ -203,8 +203,7 @@ func requiresAuth(path string) bool {
 	if path == "/mcp" || strings.HasPrefix(path, "/mcp/") {
 		return true
 	}
-	if path == "/pair" || strings.HasPrefix(path, "/pair/") {
-		return true
-	}
+	// /pair is intentionally exempted from auth so it can be loaded in a browser.
+	// Security is instead enforced by binding the port to 127.0.0.1 in docker-compose.
 	return false
 }

@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: agent_vortex
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d agent_vortex"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  whatsapp-mcp:
+    build:
+      context: ./mcp-whatsapp
+    # Override CMD to pass --allow-remote flag.
+    # Without this flag, the binary refuses to bind to 0.0.0.0 and exits
+    # immediately, which is why Docker port mapping sees "Connection reset by peer"
+    # instead of "Connection refused" — the process dies before Listen().
+    command: ["./bin/whatsapp-mcp", "serve", "--allow-remote"]
+    environment:
+      # Bind to all interfaces so Docker port mapping works.
+      # Default is 127.0.0.1:8765 (loopback-only), which is invisible outside the container.
+      WHATSAPP_MCP_ADDR: "0.0.0.0:8765"
+      # Required by --allow-remote as a security gate.
+      # Change this to a strong random secret before deploying to a shared network.
+      WHATSAPP_MCP_TOKEN: "${WHATSAPP_MCP_TOKEN:-changeme-set-in-dotenv}"
+    ports:
+      # Bind exclusively to 127.0.0.1 on the host to ensure the unauthenticated
+      # /pair endpoint is ONLY accessible from this machine and not the local network.
+      - "127.0.0.1:8765:8765"
+    volumes:
+      # The store directory contains the whatsapp.db and messages.db files.
+      # This volume ensures authentication state survives container restarts.
+      - whatsapp_data:/app/store
+    healthcheck:
+      # /pair always returns 200 HTML (paired or unpaired) and no longer requires auth.
+      # /mcp is a Streamable-HTTP MCP endpoint — a plain GET does NOT return 200,
+      # so using it as a healthcheck causes a permanent "unhealthy" status.
+      test: ["CMD", "curl", "-f", "http://localhost:8765/pair"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  agent:
+    build:
+      context: .
+    env_file:
+      - .env
+    volumes:
+      # Mount the generated directories so files persist on the host machine
+      - ./generated_pdfs:/app/generated_pdfs
+      - ./generated_excels:/app/generated_excels
+      # Google Integrations (Gmail/Calendar)
+      # Uncomment the following two lines ONLY if you have generated these files locally.
+      # - ./credentials.json:/app/credentials.json:ro
+      # - ./token.pickle:/app/token.pickle
+    depends_on:
+      postgres:
+        condition: service_healthy
+      whatsapp-mcp:
+        condition: service_started
+    # Keep standard input open for terminal interaction
+    stdin_open: true
+    tty: true
+
+volumes:
+  postgres_data:
+  whatsapp_data:

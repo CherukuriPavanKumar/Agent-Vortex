@@ -1,0 +1,7 @@
+.git
+store
+
+*.db
+*.sqlite
+
+bin
