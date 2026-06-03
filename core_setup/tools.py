@@ -65,42 +65,58 @@ GOOGLE_TOOLS = [
 
 TOOL_DESCRIPTIONS = {
     "terminal_tool": (
-        "Execute Linux terminal commands."
+        "Execute Linux shell commands for filesystem operations, local code execution, "
+        "package management (pip/apt), git operations, and system inspection. "
+        "NEVER use this for web browsing, URLs, or fetching online content. "
+        "Do NOT use curl, wget, or lynx for websites — use browser_navigate instead."
     ),
     "browser_navigate": (
-        "Navigate to websites and URLs."
+        "Open and navigate websites using a real Chromium browser. "
+        "USE THIS for ALL URL/website tasks: opening http:// or https:// links, "
+        "visiting news sites, documentation, web apps, search engines, "
+        "any online page. This is the ONLY correct tool for web navigation. "
+        "NEVER use terminal_tool or curl to open URLs."
     ),
     "browser_read": (
-        "Read page content, snapshots, screenshots, "
-        "console logs and network activity."
+        "Read and extract content from the currently open webpage. "
+        "USE THIS after browser_navigate to get text, titles, headings, links, "
+        "news headlines, article content, search results, and any page data. "
+        "Default action is 'snapshot' which returns the full page text. "
+        "NEVER use terminal_tool to read webpage content."
     ),
     "browser_interaction": (
-        "Click, type, scroll, press keys and "
-        "interact with webpages."
+        "Click, type, hover, and interact with elements on the current webpage. "
+        "Use for clicking buttons/links, filling forms, submitting search queries, "
+        "pressing keyboard keys on web elements. Requires element ref from browser_read snapshot. "
+        "NEVER use terminal_tool for web interactions."
     ),
     "browser_tabs": (
-        "Create, switch, list and close browser tabs."
+        "Manage browser tabs: list, create, switch between, or close tabs. "
+        "Use when working with multiple websites simultaneously. "
+        "NEVER use terminal_tool for browser tab management."
     ),
     "whatsapp_send_message": (
-        "Send WhatsApp messages."
+        "Send WhatsApp messages to contacts via the WhatsApp MCP server."
     ),
     "gmail_read": (
-        "Read emails from Gmail."
+        "Read and search emails from Gmail inbox. Use for email retrieval tasks."
     ),
     "gmail_send": (
-        "Send emails through Gmail."
+        "Send emails through Gmail. Use for email composition and delivery tasks."
     ),
     "calendar_read": (
-        "Read Google Calendar events."
+        "Read and list events from Google Calendar. Use for schedule lookup tasks."
     ),
     "calendar_write": (
-        "Create, update and manage Google Calendar events."
+        "Create, update, and manage Google Calendar events. Use for scheduling tasks."
     ),
     "generate_pdf": (
-        "Generate PDF documents from HTML."
+        "Generate PDF documents from structured content or HTML. "
+        "Use when the user requests a PDF file output."
     ),
     "generate_excel": (
-        "Generate Excel spreadsheets from structured data."
+        "Generate Excel spreadsheets (.xlsx) from structured tabular data. "
+        "Use when the user requests an Excel or spreadsheet file output."
     ),
 }
 

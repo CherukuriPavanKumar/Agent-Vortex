@@ -1,386 +1,133 @@
-# Agent Vortex
+# Agent Vortex V2
 
-Agent Vortex is a personal AI operating system built with LangGraph, PostgreSQL, MCP servers, and modern LLM tooling.
+Agent Vortex is a fully Dockerized, personal AI operating system built with **LangGraph**, **PostgreSQL**, **MCP servers**, and modern **LLM tooling**.
 
-It combines:
+It seamlessly integrates multiple disparate tools into a single autonomous workflow capable of reasoning, planning, executing, and persisting context across sessions.
 
-* Browser Automation
-* WhatsApp Automation
-* Gmail Integration
-* Google Calendar Integration
-* Long-Term Memory
-* File Generation (PDF & Excel)
-* Human Approval Workflows
-* Persistent Conversations
+## 🌟 Key Features
 
-into a single agent workflow.
+* **Browser Automation**: Powered by Playwright MCP. Can navigate to URLs, extract content, capture snapshots, interact with web pages, and manage tabs.
+* **WhatsApp Automation**: Powered by a built-in WhatsApp MCP sidecar. Allows the agent to send WhatsApp messages natively. 
+* **Google Workspace Integration**: Connects to Gmail and Google Calendar to read/send emails and manage scheduling.
+* **Persistent Memory Stack**: Short-Term Memory (STM) for conversational context and Long-Term Memory (LTM) stored in PostgreSQL for permanent context injection.
+* **File Generation**: Capable of generating robust PDF documents and Excel spreadsheets on the fly.
+* **Human-In-The-Loop (HITL)**: Built-in risk assessment and approval workflows before executing dangerous actions.
 
 ---
 
-# Features
-
-## Core Agent
-
-* LangGraph-based architecture
-* Planner → Risk → Approval → Executor workflow
-* Tool calling
-* Persistent conversations
-* Conversation titles
-* Long-term memory
-* Short-term memory
-
-## Browser Automation
-
-Powered by Playwright MCP.
-
-Capabilities:
-
-* Open websites
-* Read page content
-* Interact with webpages
-* Manage tabs
-* Extract information
-
-## WhatsApp Automation
-
-Powered by MCP WhatsApp.
-
-Capabilities:
-
-* Send WhatsApp messages
-* Contact lookup
-* Automated messaging workflows
-
-## Gmail
-
-Capabilities:
-
-* Read emails
-* Send emails
-* Gmail search support
-
-## Google Calendar
-
-Capabilities:
-
-* Read upcoming events
-* Create calendar events
-
-## File Generation
-
-Capabilities:
-
-* Generate PDF documents
-* Generate Excel spreadsheets
-
-## Terminal Access
-
-Capabilities:
-
-* Execute Linux terminal commands
-
----
-
-# Architecture
+## 🏗️ Architecture
 
 ```text
 START
   ↓
-Planner
+Planner Node (Designs execution steps)
   ↓
-Risk Assessment
+Risk Assessment (Evaluates action danger level)
   ↓
-Approval
+Approval (Optional HITL for high-risk plans)
   ↓
-Executor
-  ↓
-Tools
-  ↓
-Executor Loop
+Executor (Runs the tools using Browser-First Logic)
   ↓
 END
 ```
 
-Memory Stack:
-
-```text
-User
- ↓
-STM (Conversation Memory)
- ↓
-LTM (PostgreSQL Memory Store)
- ↓
-Context Injection
-```
-
 ---
 
-# Tech Stack
+## 🚀 Quick Start (Dockerized)
 
-## Core
+Agent Vortex is now fully Dockerized! The repository contains everything you need to run the Agent, the PostgreSQL database, and the WhatsApp MCP sidecar seamlessly.
 
-* Python 3.14+
-* LangGraph
-* LangChain
-* PostgreSQL
-* OpenRouter
+### 1. Prerequisites
+* **Docker** and **Docker Compose** installed on your host machine.
+* An API key for your chosen LLM (default is via OpenRouter).
 
-## Integrations
-
-* Playwright MCP
-* WhatsApp MCP
-* Gmail API
-* Google Calendar API
-
-## Storage
-
-* AsyncPostgresSaver
-* PostgreSQL Store
-
----
-
-# Prerequisites
-
-Install:
-
-* Python 3.14+
-* uv
-* PostgreSQL
-* Node.js
-
-Verify:
+### 2. Clone the Repository
 
 ```bash
-python --version
-uv --version
-node --version
-psql --version
+git clone https://github.com/CherukuriPavanKumar/AgentVortex.git
+cd AgentVortex
 ```
 
----
+### 3. Environment Setup
 
-# Installation
-
-Clone the repository:
-
-```bash
-git clone https://github.com/CherukuriPavanKumar/Agent-Vortex.git
-
-cd Agent-Vortex
-```
-
-Install dependencies:
-
-```bash
-uv sync
-```
-
----
-
-# Environment Variables
-
-Create:
-
+Copy the example environment file:
 ```bash
 cp .env.example .env
 ```
 
-Example:
+Edit your `.env` file:
+1. Provide your `OPENROUTER_API_KEY`.
+2. Generate a secure token for the WhatsApp MCP sidecar:
+   ```bash
+   openssl rand -hex 32
+   ```
+   Paste this value into `WHATSAPP_MCP_TOKEN`.
 
-```env
-OPENROUTER_API_KEY=your_openrouter_key
+### 4. Optional: Google Integrations
+If you wish to use the Gmail or Google Calendar features:
+1. Generate your `credentials.json` from the Google Cloud Console.
+2. Run the local script to authenticate and generate `token.pickle`.
+3. Uncomment the volume mounts for these files in `docker-compose.yml`.
 
-DATABASE_URL=postgresql://postgres:password@localhost:5433/agent_vortex
-```
+### 5. Launch the System
 
----
-
-# PostgreSQL Setup
-
-Create a PostgreSQL database:
-
-```sql
-CREATE DATABASE agent_vortex;
-```
-
-Ensure PostgreSQL is running and the DATABASE_URL is correct.
-
-The application automatically creates required tables during startup.
-
----
-
-# Browser MCP Setup
-
-Agent Vortex uses Playwright MCP.
-
-Verify it works:
-
+Run Docker Compose to build and start the ecosystem:
 ```bash
-npx @playwright/mcp@latest --headless
+docker compose up -d --build
 ```
 
-The browser integration will automatically connect during startup.
+### 6. Pair WhatsApp (Required for WhatsApp Tools)
 
-Expected:
+The WhatsApp MCP server runs securely isolated in its container, requiring a one-time QR code scan from your phone.
 
-```text
-[Browser MCP] Connected.
-[Browser MCP] 23 tools available.
-```
+1. Ensure the system is running (`docker compose ps`).
+2. Open your host machine's browser and navigate to:
+   **http://localhost:8765/pair**
+3. Open WhatsApp on your phone → *Settings* → *Linked Devices* → *Link a Device*.
+4. Scan the QR code shown on the screen.
 
----
+> **Security Note**: This pairing page is bound strictly to `127.0.0.1` on your host. It is not exposed to your local network. 
 
-# Gmail & Google Calendar Setup
+### 7. Interact with the Agent
 
-Google integrations are optional.
-
-To enable:
-
-1. Open Google Cloud Console
-2. Create a project
-3. Enable:
-
-   * Gmail API
-   * Google Calendar API
-4. Configure OAuth Consent Screen
-5. Create Desktop OAuth Credentials
-6. Download:
-
-```text
-credentials.json
-```
-
-Place it in the repository root.
-
-Run once locally:
-
+Attach to the agent container's terminal interface:
 ```bash
-uv run main.py
+docker attach agentvortex-agent-1
 ```
+*(Tip: To detach without stopping the container, press `Ctrl+p`, then `Ctrl+q`).*
 
-Authorize the application.
-
-A:
-
-```text
-token.pickle
-```
-
-file will be generated automatically.
+Any PDFs or Excel spreadsheets generated by the agent will appear automatically in your host machine's `generated_pdfs/` or `generated_excels/` directories via Docker volume mounts.
 
 ---
 
-# WhatsApp Setup
+## 🛠️ Available Tools
 
-WhatsApp integration is optional.
-
-Agent Vortex uses an MCP-based WhatsApp server.
-
-The server must be running before startup.
-
-When configured correctly:
-
-```text
-[WhatsApp] Tool loaded.
-```
-
-appears during startup.
+| Tool Group | Tools |
+|------------|-------|
+| **Core** | `terminal_tool`, `generate_pdf`, `generate_excel` |
+| **Browser** | `browser_navigate`, `browser_read`, `browser_interaction`, `browser_tabs` |
+| **WhatsApp** | `whatsapp_send_message` |
+| **Google** | `gmail_read`, `gmail_send`, `calendar_read`, `calendar_write` |
 
 ---
 
-# Running Agent Vortex
+## 📦 Current Status
 
-Start the agent:
+Current version: **v0.2.0**
 
-```bash
-uv run main.py
-```
+**Implemented in V2:**
+* ✅ Complete Dockerization (Agent + Postgres + MCPs)
+* ✅ Secure WhatsApp MCP Pairing via Docker Networking
+* ✅ Browser MCP integration (Playwright)
+* ✅ LLM Tooling & Context Injection
+* ✅ Persistent Conversations (PostgreSQL)
 
-Expected startup:
-
-```text
-[1/6] Bootstrapping database...
-[2/6] Checking LLM...
-[3/6] Connecting Browser MCP...
-[4/6] Loading tools...
-[5/6] Connecting checkpointer...
-[6/6] Building graph...
-
-Agent Vortex Ready.
-```
+**Future Roadmap:**
+* Agent UI / Frontend Dashboard
+* Improved semantic vector memory architecture
+* Multi-agent delegation workflows
 
 ---
 
-# Available Tools
-
-Current tools:
-
-* terminal_tool
-* browser_navigate
-* browser_read
-* browser_interaction
-* browser_tabs
-* whatsapp_send_message
-* gmail_read
-* gmail_send
-* calendar_read
-* calendar_write
-* generate_pdf
-* generate_excel
-
----
-
-# Project Structure
-
-```text
-Agent-Vortex/
-│
-├── core_setup/
-├── memory/
-├── nodes/
-├── tools/
-│
-├── generated_pdfs/
-├── generated_excels/
-│
-├── main.py
-├── state.py
-├── config.yaml
-├── pyproject.toml
-└── README.md
-```
-
----
-
-# Current Status
-
-Current version:
-
-```text
-v0.1.0
-```
-
-Implemented:
-
-* Browser Automation
-* WhatsApp Automation
-* Gmail
-* Calendar
-* Memory System
-* PostgreSQL Persistence
-* PDF Generation
-* Excel Generation
-
-Future work:
-
-* Docker support
-* Simplified onboarding
-* Additional MCP integrations
-* Improved memory architecture
-* Expanded tool ecosystem
-
----
-
-# License
-
+## 📄 License
 MIT License

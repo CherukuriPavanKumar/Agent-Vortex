@@ -10,14 +10,24 @@ async def browser_interaction(
     key: str | None = None,
 ):
     """
-    Interact with webpage elements.
-    Requires element unique 'target' (ref) from snapshots.
+    Interact with elements on the currently open webpage in the browser.
+
+    USE THIS TOOL to:
+    - Click buttons, links, checkboxes, dropdowns on a webpage
+    - Type text into search boxes, forms, input fields on a website
+    - Hover over elements on a webpage
+    - Press keyboard keys (Enter, Tab, Escape) on a webpage element
+    - Submit forms on websites
+
+    ALWAYS use browser_navigate to open the page and browser_read(action="snapshot")
+    to get element references (target) BEFORE interacting.
+    NEVER use terminal_tool for clicking or typing on webpages.
 
     Actions:
-    - "click": click an element
-    - "hover": hover over an element
-    - "type": type text into an element (requires 'text')
-    - "press_key": press a key like "Enter" on an element (requires 'key')
+    - "click": click an element (requires 'target' ref from snapshot)
+    - "hover": hover over an element (requires 'target' ref)
+    - "type": type text into an input field (requires 'target' and 'text')
+    - "press_key": press a keyboard key (requires 'key', e.g. "Enter", "Tab")
     """
     try:
         if action == "click":
