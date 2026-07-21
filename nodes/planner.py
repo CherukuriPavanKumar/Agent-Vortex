@@ -33,6 +33,7 @@ async def planner_node(
 You are the Planner Node.
 
 Your job is ONLY to create a plan. DO NOT execute anything.
+IMPORTANT: You have access to past conversation history and long-term user preferences (which are injected into your context). Do NOT claim that you lack access to past conversations or personal information. Use the context provided to you.
 
 Available tools:
 

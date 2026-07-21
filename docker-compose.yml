@@ -55,23 +55,40 @@ services:
       context: .
     env_file:
       - .env
+    environment:
+      # Override local .env localhost settings to use Docker internal network
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/agent_vortex
+      - WHATSAPP_MCP_URL=http://whatsapp-mcp:8765/mcp
+    ports:
+      - "8000:8000"
     volumes:
-      # Mount the generated directories so files persist on the host machine
       - ./generated_pdfs:/app/generated_pdfs
       - ./generated_excels:/app/generated_excels
-      # Google Integrations (Gmail/Calendar)
-      # Uncomment the following two lines ONLY if you have generated these files locally.
-      # - ./credentials.json:/app/credentials.json:ro
-      # - ./token.pickle:/app/token.pickle
+      # Persist the sqlite memory database
+      - agent_data:/app/data
+      # Mount credentials if they exist
+      - ./credentials.json:/app/credentials.json:ro
+      - ./token.pickle:/app/token.pickle
     depends_on:
       postgres:
         condition: service_healthy
       whatsapp-mcp:
-        condition: service_started
-    # Keep standard input open for terminal interaction
-    stdin_open: true
-    tty: true
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      # In Next.js Docker, the browser needs to fetch the API.
+      # If this is on a VPS, NEXT_PUBLIC_API_URL MUST be the public IP or domain.
+      # For local Docker testing, localhost is fine.
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    depends_on:
+      - agent
 
 volumes:
   postgres_data:
   whatsapp_data:
+  agent_data:

@@ -53,5 +53,5 @@ ENV PATH="/app/.venv/bin:$PATH"
 # Prevent python from buffering stdout (better logging)
 ENV PYTHONUNBUFFERED=1
 
-# Command to run the application
-CMD ["python", "main.py"]
+# Command to run the application (FastAPI backend)
+CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8000"]
