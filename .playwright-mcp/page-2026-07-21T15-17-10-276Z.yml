@@ -1,0 +1,14 @@
+- generic [ref=f2e2]:
+  - separator [ref=f2e3]
+  - iframe [ref=f2e8]:
+    - generic [ref=f3e2]:
+      - generic [ref=f3e3]:
+        - checkbox "I'm not a robot" [ref=f3e7]
+        - generic [ref=f3e9]: I'm not a robot
+      - generic [ref=f3e12]: reCAPTCHA
+  - separator [ref=f2e9]
+  - generic [ref=f2e10]:
+    - text: About this page Our systems have detected unusual traffic from your computer network. This page checks to see if it's really you sending the requests, and not a robot.
+    - link "Why did this happen?" [ref=f2e11] [cursor=pointer]:
+      - /url: "#"
+    - generic [ref=f2e12]: "IP address: 2401:4900:1cb2:1fd9:9063:49ed:6a67:52f6Time: 2026-07-21T15:17:08ZURL: https://www.google.com/search?q=capital+of+India&sei=c41faq3TC_Tj0PEPuq_rwQo"

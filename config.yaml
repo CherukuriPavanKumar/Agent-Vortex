@@ -1,5 +1,5 @@
 llm:
-  model: "poolside/laguna-xs.2:free"
+  model: "google/gemini-2.5-flash"
   temperature: 1.0
   timeout: 120
   max_retries: 3

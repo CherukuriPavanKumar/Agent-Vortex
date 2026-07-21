@@ -17,11 +17,11 @@ def approval_node(
                 "plan",
                 [],
             ),
-            "tools": state.get(
+            "planned_tools": state.get(
                 "planned_tools",
                 [],
             ),
-            "risk": state.get(
+            "risk_level": state.get(
                 "risk_level",
                 "low",
             ),
