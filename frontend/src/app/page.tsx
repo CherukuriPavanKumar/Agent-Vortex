@@ -1,10 +1,28 @@
 "use client";
-import { useState, useEffect, useRef, useCallback } from "react";
+
+import { useState, useEffect, useRef, useCallback, FormEvent } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import {
+  AlertCircle,
+  ArrowUp,
+  Calendar,
+  Check,
+  FileText,
+  Globe,
+  Mail,
+  MessageCircle,
+  MessageSquare,
+  PanelLeftClose,
+  PanelLeftOpen,
+  Plus,
+  ShieldAlert,
+  Terminal,
+  X,
+} from "lucide-react";
 import styles from "./page.module.css";
 
-const API = "http://localhost:8000";
+const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 // ==========================================================
 // Types
@@ -28,7 +46,75 @@ type Interrupt = {
 };
 
 // ==========================================================
-// Auth helpers
+// Static Capabilities & Starters (True to AgentVortex tools)
+// ==========================================================
+
+const CAPABILITIES = [
+  {
+    name: "Browser",
+    description: "Navigate live sites, read pages, and extract structured content",
+    Icon: Globe,
+  },
+  {
+    name: "WhatsApp",
+    description: "Send messages, files, reactions, search contacts, and manage groups",
+    Icon: MessageCircle,
+  },
+  {
+    name: "Gmail",
+    description: "Search inbox threads and compose email replies",
+    Icon: Mail,
+  },
+  {
+    name: "Calendar",
+    description: "Check upcoming schedule and create calendar events",
+    Icon: Calendar,
+  },
+  {
+    name: "Terminal",
+    description: "Inspect files and execute local shell operations",
+    Icon: Terminal,
+  },
+  {
+    name: "Documents",
+    description: "Generate formatted PDF reports and Excel workbooks",
+    Icon: FileText,
+  },
+] as const;
+
+const STARTER_PROMPTS = [
+  "What are my most recent WhatsApp chats",
+  "List my Google Calendar events for the next 7 days",
+  "Browse https://news.ycombinator.com and summarize the top 5 stories",
+] as const;
+
+// ==========================================================
+// Brand Mark (Flat geometric vortex aperture, no glow/gradient)
+// ==========================================================
+
+function VortexMark({ size = 18 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 3a9 9 0 0 1 6.36 15.36" />
+      <path d="M21 12a9 9 0 0 1-15.36 6.36" />
+      <circle cx="12" cy="12" r="3" />
+    </svg>
+  );
+}
+
+// ==========================================================
+// Auth Helpers
 // ==========================================================
 
 function getToken(): string | null {
@@ -53,6 +139,13 @@ function authHeaders(): Record<string, string> {
   };
 }
 
+function formatRiskLabel(level?: string): string {
+  const normalized = (level || "low").toLowerCase();
+  if (normalized === "high") return "High risk";
+  if (normalized === "medium") return "Medium risk";
+  return "Low risk";
+}
+
 // ==========================================================
 // Component
 // ==========================================================
@@ -64,9 +157,10 @@ export default function Home() {
   const [password, setPassword] = useState("");
   const [authError, setAuthError] = useState("");
 
-  // Sidebar state
+  // Sidebar state (desktop defaults open; mobile drawer defaults closed)
   const [conversations, setConversations] = useState<Conversation[]>([]);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [desktopSidebarOpen, setDesktopSidebarOpen] = useState(true);
+  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
 
   // Chat state
   const [conversationId, setConversationId] = useState<string | null>(null);
@@ -77,6 +171,8 @@ export default function Home() {
   const [streamingContent, setStreamingContent] = useState("");
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
   const prevConvoRef = useRef<string | null>(null);
 
   // ----------------------------------------------------------
@@ -93,7 +189,6 @@ export default function Home() {
     const checkAuth = async () => {
       const token = getToken();
       if (!token) {
-        // Try unauthenticated — maybe password is disabled
         try {
           const res = await fetch(`${API}/api/conversations`);
           if (res.ok) {
@@ -126,13 +221,7 @@ export default function Home() {
   // ----------------------------------------------------------
   // Load conversations after auth
   // ----------------------------------------------------------
-  useEffect(() => {
-    if (authenticated) {
-      fetchConversations();
-    }
-  }, [authenticated]);
-
-  const fetchConversations = async () => {
+  const fetchConversations = useCallback(async () => {
     try {
       const res = await fetch(`${API}/api/conversations`, {
         headers: authHeaders(),
@@ -144,12 +233,35 @@ export default function Home() {
     } catch (err) {
       console.error("Failed to fetch conversations", err);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    if (!authenticated) return;
+    let active = true;
+    const loadConversations = async () => {
+      try {
+        const res = await fetch(`${API}/api/conversations`, {
+          headers: authHeaders(),
+        });
+        if (res.ok && active) {
+          const data = await res.json();
+          setConversations(data);
+        }
+      } catch (err) {
+        console.error("Failed to fetch conversations", err);
+      }
+    };
+    loadConversations();
+    return () => {
+      active = false;
+    };
+  }, [authenticated]);
 
   // ----------------------------------------------------------
   // Login
   // ----------------------------------------------------------
-  const handleLogin = async () => {
+  const handleLogin = async (e: FormEvent) => {
+    e.preventDefault();
     setAuthError("");
     try {
       const res = await fetch(`${API}/api/auth`, {
@@ -165,7 +277,7 @@ export default function Home() {
         }
         setAuthenticated(true);
       } else {
-        setAuthError("Wrong password");
+        setAuthError("Incorrect password");
       }
     } catch {
       setAuthError("Cannot connect to backend");
@@ -189,8 +301,7 @@ export default function Home() {
   // ----------------------------------------------------------
   // Create new conversation
   // ----------------------------------------------------------
-  const startNewConversation = async () => {
-    // Extract memories from previous conversation
+  const createConversationRecord = useCallback(async (): Promise<string | null> => {
     if (prevConvoRef.current) {
       extractMemories(prevConvoRef.current);
     }
@@ -200,26 +311,33 @@ export default function Home() {
         method: "POST",
         headers: authHeaders(),
       });
+      if (!res.ok) return null;
       const data = await res.json();
       setConversationId(data.id);
       prevConvoRef.current = data.id;
-      setMessages([]);
-      setInterrupt(null);
-      setStreamingContent("");
       fetchConversations();
-
-      // Close sidebar on mobile
-      if (window.innerWidth <= 768) setSidebarOpen(false);
+      return data.id;
     } catch (err) {
       console.error("Failed to create conversation", err);
+      return null;
     }
+  }, [fetchConversations]);
+
+  const startNewConversation = async () => {
+    const id = await createConversationRecord();
+    if (!id) return;
+    setMessages([]);
+    setInterrupt(null);
+    setStreamingContent("");
+
+    if (window.innerWidth <= 768) setMobileDrawerOpen(false);
+    textareaRef.current?.focus();
   };
 
   // ----------------------------------------------------------
   // Select existing conversation
   // ----------------------------------------------------------
   const selectConversation = async (id: string) => {
-    // Extract memories from previous conversation
     if (prevConvoRef.current && prevConvoRef.current !== id) {
       extractMemories(prevConvoRef.current);
     }
@@ -231,8 +349,7 @@ export default function Home() {
     setStreamingContent("");
     setLoading(true);
 
-    // Close sidebar on mobile
-    if (window.innerWidth <= 768) setSidebarOpen(false);
+    if (window.innerWidth <= 768) setMobileDrawerOpen(false);
 
     try {
       const res = await fetch(`${API}/api/chat/${id}`, {
@@ -254,7 +371,7 @@ export default function Home() {
   // Send message (SSE streaming)
   // ----------------------------------------------------------
   const sendMessage = useCallback(async () => {
-    if (!input.trim() || !conversationId || loading) return;
+    if (!input.trim() || loading || interrupt !== null) return;
 
     const userMsg = input.trim();
     setInput("");
@@ -262,13 +379,30 @@ export default function Home() {
     setLoading(true);
     setStreamingContent("");
 
-    // Reset textarea height
-    const textarea = document.querySelector("textarea");
-    if (textarea) textarea.style.height = "auto";
+    if (
+      textareaRef.current &&
+      typeof CSS !== "undefined" &&
+      !CSS.supports("field-sizing", "content")
+    ) {
+      textareaRef.current.style.height = "auto";
+    }
+
+    let activeConvoId = conversationId;
+    if (!activeConvoId) {
+      activeConvoId = await createConversationRecord();
+      if (!activeConvoId) {
+        setMessages((prev) => [
+          ...prev,
+          { role: "assistant", content: "Could not start conversation thread." },
+        ]);
+        setLoading(false);
+        return;
+      }
+    }
 
     try {
       const headers = authHeaders();
-      const res = await fetch(`${API}/api/chat/${conversationId}/stream`, {
+      const res = await fetch(`${API}/api/chat/${activeConvoId}/stream`, {
         method: "POST",
         headers,
         body: JSON.stringify({ message: userMsg }),
@@ -317,12 +451,10 @@ export default function Home() {
                 { role: "assistant", content: finalContent },
               ]);
             } else if (event.type === "title") {
-              // Update sidebar with the generated title
+              const targetId = activeConvoId;
               setConversations((prev) =>
                 prev.map((c) =>
-                  c.id === conversationId
-                    ? { ...c, title: event.content }
-                    : c
+                  c.id === targetId ? { ...c, title: event.content } : c
                 )
               );
             } else if (event.type === "error") {
@@ -337,16 +469,24 @@ export default function Home() {
           }
         }
       }
-    } catch (err) {
+    } catch {
       setStreamingContent("");
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: "Connection error. Is the backend running?" },
+        {
+          role: "assistant",
+          content: "Connection error. Check that the backend service is running.",
+        },
       ]);
     } finally {
       setLoading(false);
     }
-  }, [input, conversationId, loading]);
+  }, [input, conversationId, loading, interrupt, createConversationRecord]);
+
+  const handleComposerSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    sendMessage();
+  };
 
   // ----------------------------------------------------------
   // Handle approval
@@ -394,20 +534,30 @@ export default function Home() {
   };
 
   // ----------------------------------------------------------
-  // Textarea auto-resize & Enter to send
+  // IME-safe Enter to submit & auto-resize fallback
   // ----------------------------------------------------------
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      sendMessage();
+      if (e.nativeEvent.isComposing || e.keyCode === 229) {
+        return;
+      }
+      formRef.current?.requestSubmit();
     }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(e.target.value);
     const el = e.target;
-    el.style.height = "auto";
-    el.style.height = Math.min(el.scrollHeight, 200) + "px";
+    if (typeof CSS !== "undefined" && !CSS.supports("field-sizing", "content")) {
+      el.style.height = "auto";
+      el.style.height = `${Math.min(el.scrollHeight, 240)}px`;
+    }
+  };
+
+  const handleSelectStarter = (promptText: string) => {
+    setInput(promptText);
+    textareaRef.current?.focus();
   };
 
   // ==========================================================
@@ -416,40 +566,66 @@ export default function Home() {
 
   if (authChecking) {
     return (
-      <div className={styles.authScreen}>
+      <main className={styles.authScreen}>
         <div className={styles.authCard}>
-          <div className={styles.authLogo}>AgentVortex</div>
-          <p className={styles.authSubtext}>Connecting...</p>
+          <div className={styles.authHeader}>
+            <div className={styles.authLogoRow}>
+              <span className={styles.brandMark}>
+                <VortexMark size={18} />
+              </span>
+              <h1 className={styles.authLogo}>AgentVortex</h1>
+            </div>
+            <p className={styles.authSubtext}>Connecting to operator service</p>
+          </div>
         </div>
-      </div>
+      </main>
     );
   }
 
   if (!authenticated) {
     return (
-      <div className={styles.authScreen}>
+      <main className={styles.authScreen}>
         <div className={styles.authCard}>
-          <div className={styles.authLogo}>AgentVortex</div>
-          <p className={styles.authSubtext}>Enter your password to continue</p>
-
-          <div className={styles.authForm}>
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleLogin()}
-              className={styles.authInput}
-              autoFocus
-            />
-            <button className={styles.authButton} onClick={handleLogin}>
-              Unlock
-            </button>
+          <div className={styles.authHeader}>
+            <div className={styles.authLogoRow}>
+              <span className={styles.brandMark}>
+                <VortexMark size={18} />
+              </span>
+              <h1 className={styles.authLogo}>AgentVortex</h1>
+            </div>
+            <p className={styles.authSubtext}>Operator console</p>
           </div>
 
-          {authError && <p className={styles.authError}>{authError}</p>}
+          <form className={styles.authForm} onSubmit={handleLogin}>
+            <div className={styles.authField}>
+              <label htmlFor="auth-password" className={styles.authLabel}>
+                Password
+              </label>
+              <input
+                id="auth-password"
+                type="password"
+                autoComplete="current-password"
+                required
+                placeholder="Enter password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className={styles.authInput}
+                autoFocus
+              />
+            </div>
+            <button type="submit" className={styles.authButton}>
+              Unlock
+            </button>
+          </form>
+
+          {authError && (
+            <div role="alert" className={styles.authError}>
+              <AlertCircle size={16} strokeWidth={1.5} aria-hidden="true" />
+              <span>{authError}</span>
+            </div>
+          )}
         </div>
-      </div>
+      </main>
     );
   }
 
@@ -457,199 +633,437 @@ export default function Home() {
   // Main App
   // ==========================================================
 
+  const activeTitle = conversationId
+    ? conversations.find((c) => c.id === conversationId)?.title || "New thread"
+    : "Operator console";
+
+  const riskLevel = (interrupt?.risk_level || "low").toLowerCase();
+  const riskClassKey =
+    riskLevel === "high"
+      ? "high"
+      : riskLevel === "medium"
+        ? "medium"
+        : "low";
+
   return (
     <div className={styles.appLayout}>
+      <a
+        href="#chat-input"
+        className={`visually-hidden ${styles.skipLink}`}
+      >
+        Skip to message input
+      </a>
+
       {/* Mobile overlay */}
-      {sidebarOpen && (
+      {mobileDrawerOpen && (
         <div
           className={styles.mobileOverlay}
-          onClick={() => setSidebarOpen(false)}
+          aria-hidden="true"
+          onClick={() => setMobileDrawerOpen(false)}
         />
       )}
 
       {/* ===== SIDEBAR ===== */}
-      <aside className={`${styles.sidebar} ${sidebarOpen ? styles.sidebarOpen : styles.sidebarClosed}`}>
+      <aside
+        aria-label="Conversations"
+        className={`${styles.sidebar} ${
+          desktopSidebarOpen ? "" : styles.sidebarClosed
+        } ${mobileDrawerOpen ? "" : styles.sidebarMobileClosed}`}
+      >
         <div className={styles.sidebarHeader}>
-          <span className={styles.sidebarLogo}>AgentVortex</span>
-          <button className={styles.sidebarToggle} onClick={() => setSidebarOpen(false)} title="Close sidebar">
-            ✕
+          <div className={styles.brandLockup}>
+            <span className={styles.brandMark}>
+              <VortexMark size={18} />
+            </span>
+            <span className={styles.sidebarLogo}>AgentVortex</span>
+          </div>
+          <button
+            type="button"
+            className={styles.iconButton}
+            onClick={() => {
+              if (window.innerWidth <= 768) {
+                setMobileDrawerOpen(false);
+              } else {
+                setDesktopSidebarOpen(false);
+              }
+            }}
+            aria-label="Close sidebar"
+          >
+            <PanelLeftClose size={16} strokeWidth={1.5} aria-hidden="true" />
           </button>
         </div>
 
-        <button className={styles.newChatBtn} onClick={startNewConversation}>
-          + New Chat
-        </button>
-
-        <div className={styles.conversationList}>
-          {conversations.map((convo) => (
-            <button
-              key={convo.id}
-              className={`${styles.conversationItem} ${conversationId === convo.id ? styles.conversationActive : ""}`}
-              onClick={() => selectConversation(convo.id)}
-              title={convo.title}
-            >
-              <span className={styles.conversationTitle}>{convo.title}</span>
-            </button>
-          ))}
-
-          {conversations.length === 0 && (
-            <p className={styles.noConversations}>No conversations yet</p>
-          )}
+        <div className={styles.sidebarControls}>
+          <button
+            type="button"
+            className={styles.newChatBtn}
+            onClick={startNewConversation}
+          >
+            <Plus size={16} strokeWidth={1.5} aria-hidden="true" />
+            <span>New thread</span>
+          </button>
         </div>
+
+        <div className={styles.sidebarSectionHeader}>
+          <span className={styles.sidebarSectionLabel}>Threads</span>
+          <span className={styles.sidebarCount}>{conversations.length}</span>
+        </div>
+
+        <nav aria-label="Conversation history" className={styles.conversationNav}>
+          <div className={styles.conversationList}>
+            {conversations.map((convo) => {
+              const isActive = conversationId === convo.id;
+              return (
+                <button
+                  type="button"
+                  key={convo.id}
+                  className={`${styles.conversationItem} ${
+                    isActive ? styles.conversationActive : ""
+                  }`}
+                  onClick={() => selectConversation(convo.id)}
+                  aria-current={isActive ? "page" : undefined}
+                >
+                  <span className={styles.conversationIconBox} aria-hidden="true">
+                    {isActive ? (
+                      <span className={styles.activeDot} />
+                    ) : (
+                      <MessageSquare size={16} strokeWidth={1.5} />
+                    )}
+                  </span>
+                  <span className={styles.conversationTitle}>{convo.title}</span>
+                </button>
+              );
+            })}
+
+            {conversations.length === 0 && (
+              <p className={styles.noConversations}>No threads recorded</p>
+            )}
+          </div>
+        </nav>
       </aside>
 
-      {/* ===== MAIN AREA ===== */}
-      <main className={styles.main}>
-        {/* Header */}
+      {/* ===== MAIN WORKSPACE ===== */}
+      <main id="main-content" className={styles.main}>
+        {/* Top bar (56px height synced with sidebarHeader) */}
         <header className={styles.header}>
-          {!sidebarOpen && (
-            <button className={styles.menuBtn} onClick={() => setSidebarOpen(true)} title="Open sidebar">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <line x1="3" y1="6" x2="21" y2="6" />
-                <line x1="3" y1="12" x2="21" y2="12" />
-                <line x1="3" y1="18" x2="21" y2="18" />
-              </svg>
-            </button>
-          )}
-          <div className={styles.headerTitle}>
-            {conversationId
-              ? conversations.find((c) => c.id === conversationId)?.title || "Chat"
-              : "AgentVortex"}
+          <div className={styles.headerLeft}>
+            {!desktopSidebarOpen && (
+              <button
+                type="button"
+                className={`${styles.iconButton} ${styles.desktopMenuBtn}`}
+                onClick={() => setDesktopSidebarOpen(true)}
+                aria-label="Open sidebar"
+                aria-expanded={desktopSidebarOpen}
+              >
+                <PanelLeftOpen size={16} strokeWidth={1.5} aria-hidden="true" />
+              </button>
+            )}
+            {!mobileDrawerOpen && (
+              <button
+                type="button"
+                className={`${styles.iconButton} ${styles.mobileMenuBtn}`}
+                onClick={() => setMobileDrawerOpen(true)}
+                aria-label="Open sidebar"
+                aria-expanded={mobileDrawerOpen}
+              >
+                <PanelLeftOpen size={16} strokeWidth={1.5} aria-hidden="true" />
+              </button>
+            )}
+            <h1 className={styles.headerTitle}>{activeTitle}</h1>
+          </div>
+
+          <div className={styles.statusIndicator}>
+            <span
+              className={`${styles.statusDot} ${
+                interrupt
+                  ? styles.statusDotPending
+                  : loading
+                    ? styles.statusDotBusy
+                    : ""
+              }`}
+              aria-hidden="true"
+            />
+            <span>
+              {interrupt
+                ? "Clearance pending"
+                : loading
+                  ? "Executing"
+                  : "Ready"}
+            </span>
           </div>
         </header>
 
-        {/* Messages */}
+        {/* Chat Stream */}
         <div className={styles.chatContainer}>
           <div className={styles.messagesList}>
-            {!conversationId && messages.length === 0 && (
-              <div className={styles.emptyState}>
-                <div className={styles.emptyIcon}>⚡</div>
-                <h2>Welcome to AgentVortex</h2>
-                <p>Start a new conversation or select one from the sidebar.</p>
-                <button className={styles.emptyNewChat} onClick={startNewConversation}>
-                  + New Chat
-                </button>
-              </div>
-            )}
-
-            {conversationId && messages.length === 0 && !loading && (
-              <div className={styles.emptyState}>
-                <div className={styles.emptyIcon}>💬</div>
-                <h2>Start chatting</h2>
-                <p>Type a message below to begin.</p>
-              </div>
-            )}
-
-            {messages.map((msg, idx) => (
-              <div
-                key={idx}
-                className={`${styles.messageWrapper} ${msg.role === "user" ? styles.wrapperUser : styles.wrapperAssistant}`}
-              >
-                <div className={`${styles.messageBubble} ${msg.role === "user" ? styles.userBubble : styles.assistantBubble}`}>
-                  {msg.role === "assistant" ? (
-                    <div className={styles.markdownBody}>
-                      <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                        {msg.content}
-                      </ReactMarkdown>
+            <div className={styles.messagesInner}>
+              {!conversationId && messages.length === 0 && (
+                <section
+                  className={styles.workspaceOverview}
+                  aria-label="Workspace overview"
+                >
+                  <div className={styles.overviewIntro}>
+                    <div className={styles.overviewEyebrow}>
+                      <span className={styles.brandMark}>
+                        <VortexMark size={16} />
+                      </span>
+                      <span>Multi-tool LangGraph console</span>
                     </div>
+                    <h2 className={styles.overviewTitle}>
+                      Personal AI operator console
+                    </h2>
+                    <p className={styles.overviewSubtitle}>
+                      Delegate tasks across web browsing, shell execution,
+                      WhatsApp, Gmail, Calendar, and documents with explicit
+                      approval before medium or high-risk actions run
+                    </p>
+                  </div>
+
+                  <div className={styles.capabilitiesGrid}>
+                    {CAPABILITIES.map(({ name, description, Icon }) => (
+                      <div key={name} className={styles.capabilityCard}>
+                        <div className={styles.capabilityHeader}>
+                          <span className={styles.capabilityIcon}>
+                            <Icon size={16} strokeWidth={1.5} aria-hidden="true" />
+                          </span>
+                          <span>{name}</span>
+                        </div>
+                        <p className={styles.capabilityDesc}>{description}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className={styles.starterSection}>
+                    <span className={styles.starterLabel}>
+                      Starter instructions
+                    </span>
+                    <div className={styles.starterList}>
+                      {STARTER_PROMPTS.map((promptText) => (
+                        <button
+                          type="button"
+                          key={promptText}
+                          className={styles.starterBtn}
+                          onClick={() => handleSelectStarter(promptText)}
+                        >
+                          <span>{promptText}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </section>
+              )}
+
+              {conversationId && messages.length === 0 && !loading && (
+                <div className={styles.emptyThreadState}>
+                  <h2 className={styles.emptyThreadTitle}>Empty thread</h2>
+                  <p className={styles.emptyThreadSubtitle}>
+                    Enter an instruction below to plan and execute a task
+                  </p>
+                </div>
+              )}
+
+              {messages.map((msg, idx) => (
+                <div
+                  key={idx}
+                  className={`${styles.messageWrapper} ${
+                    msg.role === "user"
+                      ? styles.wrapperUser
+                      : styles.wrapperAssistant
+                  }`}
+                >
+                  {msg.role === "user" ? (
+                    <div className={styles.userBubble}>{msg.content}</div>
                   ) : (
-                    msg.content
+                    <>
+                      <div className={styles.assistantMeta}>
+                        <span className={styles.brandMark}>
+                          <VortexMark size={16} />
+                        </span>
+                        <span>AgentVortex</span>
+                      </div>
+                      <div className={styles.assistantBody}>
+                        <div className={styles.markdownBody}>
+                          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                            {msg.content}
+                          </ReactMarkdown>
+                        </div>
+                      </div>
+                    </>
                   )}
                 </div>
-              </div>
-            ))}
+              ))}
 
-            {/* Streaming bubble */}
-            {streamingContent && (
-              <div className={`${styles.messageWrapper} ${styles.wrapperAssistant}`}>
-                <div className={`${styles.messageBubble} ${styles.assistantBubble}`}>
-                  <div className={styles.markdownBody}>
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                      {streamingContent}
-                    </ReactMarkdown>
+              {/* Streaming response */}
+              {streamingContent && (
+                <div
+                  className={`${styles.messageWrapper} ${styles.wrapperAssistant}`}
+                >
+                  <div className={styles.assistantMeta}>
+                    <span className={styles.brandMark}>
+                      <VortexMark size={16} />
+                    </span>
+                    <span>AgentVortex</span>
                   </div>
-                  <span className={styles.cursor}>▊</span>
-                </div>
-              </div>
-            )}
-
-            {/* Loading dots */}
-            {loading && !streamingContent && !interrupt && (
-              <div className={`${styles.messageWrapper} ${styles.wrapperAssistant}`}>
-                <div className={`${styles.messageBubble} ${styles.assistantBubble}`}>
-                  <span className={styles.typingIndicator}>
-                    <span></span><span></span><span></span>
-                  </span>
-                </div>
-              </div>
-            )}
-
-            {/* Interrupt Card */}
-            {interrupt && (
-              <div className={styles.interruptCard}>
-                <div className={styles.interruptHeader}>
-                  <span className={styles.warningIcon}>⚠️</span>
-                  <h3>Approval Required</h3>
-                  <span className={`${styles.riskBadge} ${styles[`risk_${interrupt.risk_level || 'low'}`]}`}>
-                    {(interrupt.risk_level || 'low').toUpperCase()}
-                  </span>
-                </div>
-
-                <div className={styles.interruptBody}>
-                  <h4>Planned Actions</h4>
-                  <ol>
-                    {interrupt.plan.map((step, i) => (
-                      <li key={i}>{step}</li>
-                    ))}
-                  </ol>
-
-                  <h4>Tools</h4>
-                  <div className={styles.toolsList}>
-                    {interrupt.planned_tools.map((tool, i) => (
-                      <span key={i} className={styles.toolBadge}>{tool}</span>
-                    ))}
+                  <div className={styles.assistantBody}>
+                    <div className={styles.markdownBody}>
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                        {streamingContent}
+                      </ReactMarkdown>
+                    </div>
+                    <span className={styles.streamingCaret} aria-hidden="true" />
                   </div>
                 </div>
+              )}
 
-                <div className={styles.interruptActions}>
-                  <button className={styles.btnDeny} onClick={() => handleApprove(false)}>
-                    Deny
-                  </button>
-                  <button className={styles.btnApprove} onClick={() => handleApprove(true)}>
-                    Approve & Execute
-                  </button>
+              {/* Planning / Running indicator */}
+              {loading && !streamingContent && !interrupt && (
+                <div
+                  className={`${styles.messageWrapper} ${styles.wrapperAssistant}`}
+                >
+                  <div className={styles.assistantMeta}>
+                    <span className={styles.brandMark}>
+                      <VortexMark size={16} />
+                    </span>
+                    <span>AgentVortex</span>
+                  </div>
+                  <div className={styles.statusMessage} role="status">
+                    <span>Planning execution</span>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            <div ref={messagesEndRef} />
+              {/* Moment: HITL Approval Gate */}
+              {interrupt && (
+                <section
+                  className={styles.interruptCard}
+                  aria-label="Execution clearance required"
+                >
+                  <div className={styles.interruptHeader}>
+                    <div className={styles.interruptHeaderTitleGroup}>
+                      <span
+                        className={`${styles.interruptIcon} ${styles[`interruptIcon_${riskClassKey}`]}`}
+                      >
+                        <ShieldAlert
+                          size={18}
+                          strokeWidth={1.5}
+                          aria-hidden="true"
+                        />
+                      </span>
+                      <h3>Approval required</h3>
+                    </div>
+                    <span
+                      className={`${styles.riskBadge} ${styles[`risk_${riskClassKey}`]}`}
+                    >
+                      {formatRiskLabel(interrupt.risk_level)}
+                    </span>
+                  </div>
+
+                  <div className={styles.interruptBody}>
+                    <div className={styles.interruptSection}>
+                      <h4 className={styles.interruptSectionLabel}>
+                        Execution plan
+                      </h4>
+                      <ol className={styles.planList}>
+                        {interrupt.plan.map((step, i) => (
+                          <li key={i} className={styles.planItem}>
+                            <span className={styles.planStepIndex}>
+                              {String(i + 1).padStart(2, "0")}
+                            </span>
+                            <span>{step}</span>
+                          </li>
+                        ))}
+                      </ol>
+                    </div>
+
+                    <div className={styles.interruptSection}>
+                      <h4 className={styles.interruptSectionLabel}>
+                        Tools requested
+                      </h4>
+                      <div className={styles.toolsList}>
+                        {interrupt.planned_tools.map((tool, i) => (
+                          <span key={i} className={styles.toolBadge}>
+                            {tool}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className={styles.interruptActions}>
+                    <button
+                      type="button"
+                      className={styles.btnDeny}
+                      onClick={() => handleApprove(false)}
+                    >
+                      <X size={16} strokeWidth={1.5} aria-hidden="true" />
+                      <span>Deny</span>
+                    </button>
+                    <button
+                      type="button"
+                      className={styles.btnApprove}
+                      onClick={() => handleApprove(true)}
+                    >
+                      <Check size={16} strokeWidth={1.5} aria-hidden="true" />
+                      <span>Approve and run</span>
+                    </button>
+                  </div>
+                </section>
+              )}
+
+              <div ref={messagesEndRef} />
+            </div>
           </div>
 
-          {/* Input Area */}
-          {conversationId && (
-            <div className={styles.inputArea}>
+          {/* Composer */}
+          <div className={styles.inputArea}>
+            <form
+              ref={formRef}
+              onSubmit={handleComposerSubmit}
+              className={styles.composerForm}
+            >
               <div className={styles.inputWrapper}>
+                <label htmlFor="chat-input" className="visually-hidden">
+                  Message AgentVortex
+                </label>
                 <textarea
+                  ref={textareaRef}
+                  id="chat-input"
                   rows={1}
-                  placeholder="Type your message... (Shift+Enter for new line)"
+                  placeholder="Message AgentVortex"
                   value={input}
                   onChange={handleInputChange}
                   onKeyDown={handleKeyDown}
                   disabled={loading || interrupt !== null}
+                  className={styles.composerTextarea}
                 />
                 <button
+                  type="submit"
                   className={styles.sendButton}
-                  onClick={sendMessage}
+                  aria-label="Send message"
                   disabled={!input.trim() || loading || interrupt !== null}
                 >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M22 2L11 13" />
-                    <path d="M22 2L15 22L11 13L2 9L22 2Z" />
-                  </svg>
+                  <ArrowUp size={16} strokeWidth={1.5} aria-hidden="true" />
                 </button>
               </div>
-            </div>
-          )}
+              <div className={styles.composerFooter}>
+                <span>
+                  Medium and high-risk tool calls pause for approval before
+                  execution
+                </span>
+                <div className={styles.shortcutGroup} aria-hidden="true">
+                  <span className={styles.shortcutHint}>
+                    <kbd className={styles.keycap}>Shift</kbd>
+                    <kbd className={styles.keycap}>Enter</kbd>
+                    <span>New line</span>
+                  </span>
+                  <span className={styles.shortcutHint}>
+                    <kbd className={styles.keycap}>Enter</kbd>
+                    <span>Send</span>
+                  </span>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       </main>
     </div>

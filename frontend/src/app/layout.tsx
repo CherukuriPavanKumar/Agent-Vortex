@@ -1,16 +1,27 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+const geistSans = Geist({
+  variable: "--font-geist-sans",
   subsets: ["latin"],
   weight: ["400", "500", "600"],
 });
 
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+  weight: ["400", "500"],
+});
+
+export const viewport: Viewport = {
+  colorScheme: "dark",
+  themeColor: "#141415",
+};
+
 export const metadata: Metadata = {
   title: "AgentVortex",
-  description: "AI Agent with Human-in-the-Loop Approval",
+  description: "Personal AI operator console with human-in-the-loop approval",
 };
 
 export default function RootLayout({
@@ -19,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>{children}</body>
     </html>
   );

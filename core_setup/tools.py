@@ -95,16 +95,44 @@ TOOL_DESCRIPTIONS = {
         "Use when working with multiple websites simultaneously. "
         "NEVER use terminal_tool for browser tab management."
     ),
+    "whatsapp_send_message": (
+        "Send a WhatsApp text message to a contact or group by name, phone number, or JID. "
+        "Phone numbers are the most reliable — always prefer them when known."
+    ),
+    "whatsapp_send_reply": (
+        "Send a WhatsApp reply that visually quotes a previous message. "
+        "Use instead of whatsapp_send_message when you want the reply to reference a specific earlier message. "
+        "Requires the message_id from whatsapp_read_messages."
+    ),
+    "whatsapp_send_reaction": (
+        "React to a WhatsApp message with an emoji (e.g. 👍, ❤️, 😂). "
+        "Requires the message_id from whatsapp_read_messages."
+    ),
+    "whatsapp_send_file": (
+        "Send a file (image, PDF, video, audio) as a WhatsApp attachment. "
+        "Provide the absolute server-side file path. Use for sharing generated PDFs, Excel files, or images."
+    ),
     "whatsapp_list_chats": (
-        "List recent WhatsApp conversations and groups, including last message preview. "
-        "Use to view active chats, check WhatsApp groups, or find contact names."
+        "List recent WhatsApp chats with last-message preview. "
+        "Use to browse active chats, check groups, or find a contact before messaging."
     ),
     "whatsapp_read_messages": (
-        "Read and search message history from WhatsApp chats or specific contacts/groups. "
-        "Use to retrieve recent messages, search chat history, or check incoming messages."
+        "Read and search WhatsApp message history from a contact, group, or across all chats. "
+        "Use to retrieve recent messages, search for a topic, or summarise a group chat."
     ),
-    "whatsapp_send_message": (
-        "Send WhatsApp messages to contacts or phone numbers via the WhatsApp MCP server."
+    "whatsapp_search_contacts": (
+        "Search the WhatsApp contact cache by name or partial phone number. "
+        "Use when unsure of the exact contact name before sending a message."
+    ),
+    "whatsapp_get_status": (
+        "Check the WhatsApp bridge connection status. "
+        "Use to diagnose connectivity issues before sending messages."
+    ),
+    "whatsapp_mark_chat_read": (
+        "Mark all unread messages in a WhatsApp chat as read (clears the unread badge)."
+    ),
+    "whatsapp_create_group": (
+        "Create a new WhatsApp group with a given name and initial participants (phone numbers or JIDs)."
     ),
     "gmail_read": (
         "Read and search emails from Gmail inbox. Use for email retrieval tasks."
@@ -138,19 +166,34 @@ def load_whatsapp_tools() -> list[Any]:
     try:
 
         from tools.whatsapp_tool import (
+            whatsapp_send_message,
+            whatsapp_send_reply,
+            whatsapp_send_reaction,
+            whatsapp_send_file,
             whatsapp_list_chats,
             whatsapp_read_messages,
-            whatsapp_send_message,
+            whatsapp_search_contacts,
+            whatsapp_get_status,
+            whatsapp_mark_chat_read,
+            whatsapp_create_group,
         )
 
         print(
-            "[WhatsApp] Tools loaded (list_chats, read_messages, send_message)."
+            "[WhatsApp] Tools loaded (10 tools: send, reply, reaction, file, "
+            "list_chats, read_messages, search_contacts, status, mark_read, create_group)."
         )
 
         return [
+            whatsapp_send_message,
+            whatsapp_send_reply,
+            whatsapp_send_reaction,
+            whatsapp_send_file,
             whatsapp_list_chats,
             whatsapp_read_messages,
-            whatsapp_send_message,
+            whatsapp_search_contacts,
+            whatsapp_get_status,
+            whatsapp_mark_chat_read,
+            whatsapp_create_group,
         ]
 
     except Exception as e:

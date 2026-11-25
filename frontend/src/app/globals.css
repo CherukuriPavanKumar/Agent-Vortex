@@ -1,55 +1,161 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+@layer reset, base;
 
 :root {
-  --bg: #000000;
-  --fg: #ededed;
-  --fg-muted: #888888;
-  --fg-dim: #555555;
-  --border: #222222;
-  --surface: #0a0a0a;
-  --surface-hover: #111111;
-  --surface-active: #1a1a1a;
-  --white: #ffffff;
-  --danger: #ff4444;
-  --success: #00cc88;
-  --warning: #ffaa00;
-  --radius: 8px;
-  --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color-scheme: dark;
+
+  /* Surfaces — Dark Graphite ramp */
+  --bg-sidebar: #0f0f10;
+  --bg-canvas: #141415;
+  --bg-card: #19191b;
+  --bg-hover: #1d1d1f;
+  --bg-raised: #232325;
+
+  /* Text roles */
+  --text-primary: #ededed;
+  --text-secondary: #a1a1a6;
+  --text-muted: #85858b;
+
+  /* Hairlines & highlights */
+  --hairline: rgba(237, 237, 237, 0.08);
+  --hairline-strong: rgba(237, 237, 237, 0.14);
+  --top-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --btn-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.22);
+
+  /* Signal accent — Instrument Amber */
+  --accent: #e5993e;
+  --accent-surface: rgba(229, 153, 62, 0.12);
+  --accent-hairline: rgba(229, 153, 62, 0.28);
+  --accent-text: #141415;
+  accent-color: var(--accent);
+
+  /* Semantic tones calibrated for graphite */
+  --positive: #4cc38a;
+  --positive-surface: rgba(76, 195, 138, 0.12);
+  --positive-hairline: rgba(76, 195, 138, 0.26);
+  --warning: #e5993e;
+  --warning-surface: rgba(229, 153, 62, 0.12);
+  --warning-hairline: rgba(229, 153, 62, 0.28);
+  --negative: #e5484d;
+  --negative-surface: rgba(229, 72, 77, 0.12);
+  --negative-hairline: rgba(229, 72, 77, 0.28);
+
+  /* Primary off-white action fill */
+  --btn-primary-bg: #ededed;
+  --btn-primary-fg: #141415;
+
+  /* Scrollbars (>= 3:1 contrast against canvas/sidebar) */
+  --scrollbar-thumb: #68686f;
+  --scrollbar-track: transparent;
+
+  /* Typography */
+  --font-sans: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Radii (nested scale) */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  /* Layout & Spacing (4px base grid) */
+  --header-height: 56px;
+  --sidebar-width: 264px;
+
+  /* Motion */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 150ms;
+  --duration-mid: 220ms;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+@layer reset {
+  :where(*, *::before, *::after) {
+    box-sizing: border-box;
+  }
+
+  :where(body, h1, h2, h3, h4, p, ul, ol, pre, blockquote) {
+    margin: 0;
+  }
+
+  :where(ul, ol) {
+    padding: 0;
+  }
 }
 
-body {
-  background: var(--bg);
-  color: var(--fg);
-  font-family: var(--font);
-  min-height: 100vh;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@layer base {
+  html,
+  body {
+    height: 100%;
+  }
+
+  body {
+    background: var(--bg-canvas);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button {
+    cursor: pointer;
+    border: none;
+    background: none;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+  }
+
+  input,
+  textarea {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+  }
+
+  :where(a:any-link, button, input, textarea, [tabindex]):focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: rgba(229, 153, 62, 0.24);
+    color: var(--text-primary);
+  }
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+.visually-hidden:where(:not(:focus-within, :active)) {
+  position: absolute !important;
+  clip-path: inset(50%) !important;
+  overflow: hidden !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  white-space: nowrap !important;
 }
 
-button {
-  cursor: pointer;
-  border: none;
-  background: none;
-  font-family: inherit;
-  font-size: inherit;
-}
-
-input, textarea {
-  font-family: inherit;
-  font-size: inherit;
-}
-
-::selection {
-  background: rgba(255, 255, 255, 0.15);
+@media (forced-colors: active) {
+  :root {
+    --bg-sidebar: Canvas;
+    --bg-canvas: Canvas;
+    --bg-card: Canvas;
+    --bg-hover: Canvas;
+    --bg-raised: Canvas;
+    --text-primary: CanvasText;
+    --text-secondary: CanvasText;
+    --text-muted: GrayText;
+    --hairline: ButtonBorder;
+    --hairline-strong: ButtonText;
+    --accent: Highlight;
+    --btn-primary-bg: ButtonFace;
+    --btn-primary-fg: ButtonText;
+  }
 }
