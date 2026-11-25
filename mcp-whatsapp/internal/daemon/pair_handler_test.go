@@ -192,6 +192,7 @@ func TestHandlePairReset_LogoutErrorSurfaces(t *testing.T) {
 
 func TestPairGet_RateLimited(t *testing.T) {
 	h, _ := newTestHandlers(false, "abc", nil)
+	h.pairGetLimiter = NewLimiter(5.0/60.0, 5)
 	// Exhaust the burst of 5.
 	for i := 0; i < 5; i++ {
 		w := httptest.NewRecorder()
@@ -213,6 +214,7 @@ func TestPairGet_RateLimited(t *testing.T) {
 
 func TestPairReset_RateLimited(t *testing.T) {
 	h, _ := newTestHandlers(true, "", nil)
+	h.pairResetLimiter = NewLimiter(1.0/60.0, 1)
 	// First POST should succeed (burst=1).
 	token := h.generateCSRFToken()
 	body := strings.NewReader("csrf_token=" + token)

@@ -14,7 +14,7 @@ func (c *Client) GetBlocklist(ctx context.Context) (string, error) {
 	if !c.wa.IsConnected() {
 		return "", errors.New("not connected to WhatsApp")
 	}
-	list, err := c.wa.GetBlocklist(ctx)
+	list, err := c.wa.GetBlocklist(ctx, "")
 	if err != nil {
 		return "", fmt.Errorf("get blocklist: %w", err)
 	}
@@ -43,7 +43,7 @@ func (c *Client) updateBlocklist(ctx context.Context, jidRaw string, action even
 	if err != nil {
 		return fmt.Errorf("invalid contact JID: %w", err)
 	}
-	if _, err := c.wa.UpdateBlocklist(ctx, jid, action); err != nil {
+	if _, err := c.wa.UpdateBlocklist(ctx, jid, action, ""); err != nil {
 		return fmt.Errorf("update blocklist (%s): %w", action, err)
 	}
 	return nil

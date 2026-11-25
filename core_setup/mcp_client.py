@@ -29,7 +29,13 @@ client = Client(
                 # --headless: required for Docker / servers with no display.
                 # Without this flag Chromium tries to open a visible window and
                 # immediately fails in headless environments.
-                "args": ["-y", "@playwright/mcp@latest", "--headless"],
+                #
+                # --no-sandbox: required when running as root inside Docker.
+                # Chrome refuses to launch as root without this flag and exits
+                # immediately with "Running as root without --no-sandbox is not
+                # supported". The sandbox provides no extra security inside an
+                # already-isolated Docker container, so disabling it is safe here.
+                "args": ["-y", "@playwright/mcp@latest", "--headless", "--no-sandbox"],
             }
         }
     }

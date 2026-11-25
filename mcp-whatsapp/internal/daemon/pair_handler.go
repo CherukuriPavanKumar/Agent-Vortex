@@ -56,9 +56,9 @@ func newPairHandlers(cache *PairCache, reset resetter) *pairHandlers {
 	return &pairHandlers{
 		cache:            cache,
 		reset:            reset,
-		pairGetLimiter:   NewLimiter(5.0/60.0, 5),   // 5/min, burst 5
-		pairQRLimiter:    NewLimiter(10.0/60.0, 10), // 10/min, burst 10
-		pairResetLimiter: NewLimiter(1.0/60.0, 1),   // 1/min, burst 1
+		pairGetLimiter:   NewLimiter(60.0/60.0, 60), // 60/min, burst 60 (permits 5s refresh + docker healthcheck)
+		pairQRLimiter:    NewLimiter(60.0/60.0, 60), // 60/min, burst 60
+		pairResetLimiter: NewLimiter(5.0/60.0, 5),   // 5/min, burst 5
 	}
 }
 

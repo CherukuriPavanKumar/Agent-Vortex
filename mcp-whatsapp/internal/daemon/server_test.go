@@ -163,15 +163,15 @@ func TestServer_AuthTokenGatesMCPAndPair(t *testing.T) {
 		t.Fatalf("want 401 without token on /mcp, got %d", resp.StatusCode)
 	}
 
-	// /pair without Authorization -> 401.
+	// /pair without Authorization -> 200 (exempted so browser can pair).
 	resp, err = http.Get(base + "/pair")
 	if err != nil {
 		t.Fatalf("GET /pair: %v", err)
 	}
 	_, _ = io.Copy(io.Discard, resp.Body)
 	resp.Body.Close()
-	if resp.StatusCode != http.StatusUnauthorized {
-		t.Fatalf("want 401 without token on /pair, got %d", resp.StatusCode)
+	if resp.StatusCode != http.StatusOK {
+		t.Fatalf("want 200 without token on /pair, got %d", resp.StatusCode)
 	}
 
 	// /pair with the right bearer token -> 200 (the Run goroutine marks the
@@ -189,12 +189,12 @@ func TestServer_AuthTokenGatesMCPAndPair(t *testing.T) {
 		t.Fatalf("want 200 with correct bearer, got %d", resp.StatusCode)
 	}
 
-	// /pair with the wrong bearer token -> 401.
-	req, _ = http.NewRequest(http.MethodGet, base+"/pair", nil)
+	// /mcp with the wrong bearer token -> 401.
+	req, _ = http.NewRequest(http.MethodGet, base+"/mcp", nil)
 	req.Header.Set("Authorization", "Bearer not-the-token")
 	resp, err = http.DefaultClient.Do(req)
 	if err != nil {
-		t.Fatalf("wrong-bearer GET /pair: %v", err)
+		t.Fatalf("wrong-bearer GET /mcp: %v", err)
 	}
 	_, _ = io.Copy(io.Discard, resp.Body)
 	resp.Body.Close()
