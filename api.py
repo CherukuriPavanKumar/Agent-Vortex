@@ -57,6 +57,16 @@ async def lifespan(app: FastAPI):
     llm_status = await health_check()
     print(f"  LLM Response: {llm_status}")
 
+    from core_setup.google_auth_check import is_google_configured
+    if is_google_configured():
+        print("[API] Checking Google OAuth token...")
+        try:
+            from core_setup.google_service import get_google_credentials
+            get_google_credentials()
+            print("  Google OAuth token valid/refreshed.")
+        except Exception as e:
+            print(f"  Google OAuth check warning: {e}")
+
     print("[API] Connecting Browser MCP...")
     await initialize_browser_mcp()
 
