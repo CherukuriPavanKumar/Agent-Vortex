@@ -14,6 +14,8 @@ TOOL_RISK = {
     # Low Risk
     "gmail_read": "low",
     "calendar_read": "low",
+    "whatsapp_list_chats": "low",
+    "whatsapp_read_messages": "low",
     "browser_navigate": "low",
     "browser_read": "low",
     "browser_tabs": "low",

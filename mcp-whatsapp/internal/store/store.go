@@ -248,6 +248,8 @@ CREATE TABLE IF NOT EXISTS messages (
 	FOREIGN KEY (chat_jid) REFERENCES chats(jid)
 );
 
+CREATE INDEX IF NOT EXISTS idx_messages_chat_time ON messages(chat_jid, timestamp DESC);
+
 CREATE TABLE IF NOT EXISTS poll_votes (
 	poll_message_id TEXT NOT NULL,
 	poll_chat_jid TEXT NOT NULL,

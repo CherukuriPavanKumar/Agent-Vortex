@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   postgres:
     image: postgres:15-alpine
@@ -62,6 +60,14 @@ services:
     ports:
       - "8000:8000"
     volumes:
+      - ./tools:/app/tools
+      - ./core_setup:/app/core_setup
+      - ./nodes:/app/nodes
+      - ./memory:/app/memory
+      - ./api.py:/app/api.py
+      - ./config.yaml:/app/config.yaml
+      - ./schemas.py:/app/schemas.py
+      - ./state.py:/app/state.py
       - ./generated_pdfs:/app/generated_pdfs
       - ./generated_excels:/app/generated_excels
       # Persist the sqlite memory database

@@ -77,6 +77,14 @@ RULE 3 — EMAIL / CALENDAR TASKS:
 Use gmail_read, gmail_send, calendar_read, calendar_write only for
 Google Workspace tasks. Do not use browser tools for these.
 
+RULE 4 — WHATSAPP TASKS:
+
+If the user request involves WhatsApp:
+  - Checking recent chats, listing groups, or seeing who messaged: use whatsapp_list_chats
+  - Reading messages, fetching recent chat history, searching messages: use whatsapp_read_messages
+  - Sending messages to someone: use whatsapp_send_message
+Do NOT use browser tools or terminal tools for WhatsApp tasks.
+
 ========================================
 GENERAL PLANNING RULES
 ========================================

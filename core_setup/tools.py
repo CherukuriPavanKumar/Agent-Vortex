@@ -95,8 +95,16 @@ TOOL_DESCRIPTIONS = {
         "Use when working with multiple websites simultaneously. "
         "NEVER use terminal_tool for browser tab management."
     ),
+    "whatsapp_list_chats": (
+        "List recent WhatsApp conversations and groups, including last message preview. "
+        "Use to view active chats, check WhatsApp groups, or find contact names."
+    ),
+    "whatsapp_read_messages": (
+        "Read and search message history from WhatsApp chats or specific contacts/groups. "
+        "Use to retrieve recent messages, search chat history, or check incoming messages."
+    ),
     "whatsapp_send_message": (
-        "Send WhatsApp messages to contacts via the WhatsApp MCP server."
+        "Send WhatsApp messages to contacts or phone numbers via the WhatsApp MCP server."
     ),
     "gmail_read": (
         "Read and search emails from Gmail inbox. Use for email retrieval tasks."
@@ -130,15 +138,19 @@ def load_whatsapp_tools() -> list[Any]:
     try:
 
         from tools.whatsapp_tool import (
+            whatsapp_list_chats,
+            whatsapp_read_messages,
             whatsapp_send_message,
         )
 
         print(
-            "[WhatsApp] Tool loaded."
+            "[WhatsApp] Tools loaded (list_chats, read_messages, send_message)."
         )
 
         return [
-            whatsapp_send_message
+            whatsapp_list_chats,
+            whatsapp_read_messages,
+            whatsapp_send_message,
         ]
 
     except Exception as e:
