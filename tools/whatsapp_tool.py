@@ -286,14 +286,14 @@ async def whatsapp_list_chats(
         async with wa_client:
             args = {
                 "limit": min(max(limit, 1), 30),
-                "include_last_message": False,
+                "include_last_message": True,
             }
             if query:
                 args["query"] = query
 
             result = await asyncio.wait_for(
                 wa_client.call_tool("list_chats", args),
-                timeout=10,
+                timeout=15,
             )
 
             if not result.content:
@@ -314,11 +314,19 @@ async def whatsapp_list_chats(
                 jid = chat.get("jid") or ""
                 chat_type = "Group" if chat.get("is_group") else "Direct"
                 last_time = chat.get("last_message_time") or "Unknown"
+                last_msg = chat.get("last_message") or ""
+                sender = "Me" if chat.get("last_is_from_me") else (chat.get("last_sender") or "Them")
+
+                msg_line = ""
+                if last_msg:
+                    last_msg = last_msg.replace("\n", " ").strip()
+                    if len(last_msg) > 80:
+                        last_msg = last_msg[:77] + "..."
+                    msg_line = f"\n   Last message ({sender}): \"{last_msg}\""
 
                 lines.append(
-                    f"{i}. [{chat_type}] {name}\n"
-                    f"   Last Active: {last_time}\n"
-                    f"   JID: {jid}"
+                    f"{i}. [{chat_type}] {name} (Active: {last_time})\n"
+                    f"   ID: {jid}{msg_line}"
                 )
 
             return "\n\n".join(lines)
