@@ -1,0 +1,66 @@
+# =============================================================================
+# Agent Vortex Handheld — sdkconfig.defaults
+# Applied by ESP-IDF / PlatformIO before the board default sdkconfig.
+# Only override settings that differ from the ESP32-S3-DevKitC-1 defaults.
+# =============================================================================
+
+# ── Flash ─────────────────────────────────────────────────────────────────────
+CONFIG_ESPTOOLPY_FLASHSIZE_16MB=y
+CONFIG_ESPTOOLPY_FLASHSIZE="16MB"
+
+# ── Logging ───────────────────────────────────────────────────────────────────
+# Default log level: INFO. ESP_LOGD/ESP_LOGV are compiled out in release builds.
+CONFIG_LOG_DEFAULT_LEVEL_INFO=y
+CONFIG_LOG_DEFAULT_LEVEL=3
+
+# ── USB / Serial Console ──────────────────────────────────────────────────────
+# ESP32-S3-DevKitC-1 exposes two USB-C connectors:
+#   1. UART bridge (GPIO 43/44, UART0)
+#   2. Native USB-Serial/JTAG (GPIO 19/20)
+# Keep UART0 as primary and USB-Serial/JTAG as secondary so boot logs appear
+# regardless of which USB-C port is connected.
+CONFIG_ESP_CONSOLE_UART_DEFAULT=y
+CONFIG_ESP_CONSOLE_SECONDARY_USB_SERIAL_JTAG=y
+CONFIG_ESP_CONSOLE_UART_BAUDRATE=115200
+
+# ── FreeRTOS tick rate ────────────────────────────────────────────────────────
+# 1000 Hz gives 1 ms resolution for vTaskDelay(pdMS_TO_TICKS(5000)).
+CONFIG_FREERTOS_HZ=1000
+
+# ── PSRAM — enabled for M2+ ──────────────────────────────────────────────────
+# N16R8 module has 8 MB OPI PSRAM (W83 / AP_3v3).
+# OctalSPI (OPI) mode at 80 MHz — required for the W83 PSRAM type.
+CONFIG_SPIRAM=y
+CONFIG_ESP32S3_SPIRAM_SUPPORT=y
+CONFIG_SPIRAM_MODE_OCT=y
+CONFIG_SPIRAM_SPEED_80M=y
+CONFIG_SPIRAM_USE_MALLOC=y
+# Allow PSRAM to be used for general heap allocation via malloc.
+CONFIG_SPIRAM_MALLOC_ALWAYSINTERNAL=16384
+
+# ── SPI display draw buffer ──────────────────────────────────────────────────
+# DMA transactions require buffers in internal SRAM (not PSRAM).
+# The ILI9341 driver allocates its line buffer from IRAM explicitly.
+
+# ── Watchdog ──────────────────────────────────────────────────────────────────
+# Task watchdog: 10 s — long enough that the 5 s heartbeat loop never trips it.
+CONFIG_ESP_TASK_WDT_TIMEOUT_S=10
+
+# ── LVGL 8.3 — enabled for M3+ ───────────────────────────────────────────────
+# 16-bit RGB565 with byte swap for SPI display wire order (big-endian).
+CONFIG_LV_COLOR_DEPTH_16=y
+CONFIG_LV_COLOR_16_SWAP=y
+# Route LVGL dynamic allocations through malloc() (uses 8 MB PSRAM pool).
+CONFIG_LV_MEM_CUSTOM=y
+# Built-in Montserrat fonts used by the handheld UI.
+CONFIG_LV_FONT_MONTSERRAT_12=y
+CONFIG_LV_FONT_MONTSERRAT_14=y
+CONFIG_LV_FONT_MONTSERRAT_16=y
+CONFIG_LV_FONT_MONTSERRAT_20=y
+CONFIG_LV_FONT_MONTSERRAT_24=y
+
+# ── Touch (XPT2046) — enabled for M4+ ─────────────────────────────────────────
+# Output raw 12-bit ADC values (0..4095) from esp_lcd_touch_xpt2046 so our
+# process_coordinates hook can inspect raw coordinates and apply 3-point
+# affine calibration (scaling, offset, axis swap/mirror) before LVGL sees them.
+# CONFIG_XPT2046_CONVERT_ADC_TO_COORDS is not set

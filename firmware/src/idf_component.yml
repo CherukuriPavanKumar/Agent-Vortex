@@ -1,0 +1,25 @@
+# =============================================================================
+# Agent Vortex Handheld — Component Dependencies (main component)
+# Managed by ESP-IDF Component Manager via PlatformIO.
+# Dependencies are added progressively per milestone and pinned explicitly.
+# =============================================================================
+dependencies:
+  ## ESP-IDF version constraint (verified against bundled ESP-IDF 6.1.0)
+  idf:
+    version: ">=5.2.0"
+
+  ## M2: Official Espressif ILI9341 esp_lcd panel driver
+  espressif/esp_lcd_ili9341:
+    version: "==2.1.0"
+
+  ## M3: LVGL 8.3 + Espressif LVGL port (pinned to LVGL 8.3.11; never LVGL 9)
+  lvgl/lvgl:
+    version: "==8.3.11"
+    public: true
+  espressif/esp_lvgl_port:
+    version: "==2.9.0"
+
+  ## M4: XPT2046 resistive touch controller (pulls espressif/esp_lcd_touch >= 1.0.4 as transitive dep)
+  atanisoft/esp_lcd_touch_xpt2046:
+    version: "==1.0.6"
+

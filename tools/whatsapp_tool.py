@@ -81,8 +81,8 @@ async def _resolve_jid(wa_client, contact_name: str) -> tuple[str | None, str | 
         )
         if chats_res.content:
             chats = json.loads(chats_res.content[0].text)
-            if chats:
-                return chats[0].get("jid"), None
+            if chats and chats[0].get("jid"):
+                return chats[0]["jid"], None
     except (asyncio.TimeoutError, Exception):
         pass
 
@@ -145,7 +145,7 @@ async def whatsapp_send_message(
                 return err
 
             result = await asyncio.wait_for(
-                wa_client.call_tool("send_message", {"jid": jid, "text": message}),
+                wa_client.call_tool("send_message", {"recipient": jid, "message": message}),
                 timeout=_TIMEOUT_WRITE,
             )
             text = _first_text(result)
@@ -186,7 +186,7 @@ async def whatsapp_send_reply(
             result = await asyncio.wait_for(
                 wa_client.call_tool(
                     "send_reply",
-                    {"jid": jid, "message_id": message_id, "text": reply_text},
+                    {"chat_jid": jid, "target_message_id": message_id, "body": reply_text},
                 ),
                 timeout=_TIMEOUT_WRITE,
             )
@@ -227,7 +227,7 @@ async def whatsapp_send_reaction(
             result = await asyncio.wait_for(
                 wa_client.call_tool(
                     "send_reaction",
-                    {"jid": jid, "message_id": message_id, "reaction": emoji},
+                    {"chat_jid": jid, "message_id": message_id, "emoji": emoji},
                 ),
                 timeout=_TIMEOUT_WRITE,
             )
@@ -268,7 +268,7 @@ async def whatsapp_send_file(
             if err:
                 return err
 
-            args: dict = {"jid": jid, "path": file_path}
+            args: dict = {"recipient": jid, "media_path": file_path}
             if caption:
                 args["caption"] = caption
 
@@ -512,7 +512,7 @@ async def whatsapp_mark_chat_read(
                 return err
 
             result = await asyncio.wait_for(
-                wa_client.call_tool("mark_chat_read", {"jid": jid}),
+                wa_client.call_tool("mark_chat_read", {"chat_jid": jid}),
                 timeout=_TIMEOUT_WRITE,
             )
             text = _first_text(result)

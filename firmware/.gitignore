@@ -1,0 +1,20 @@
+# Agent Vortex Handheld — Firmware .gitignore
+
+# PlatformIO build output
+.pio/
+.pioenvs/
+
+# ESP-IDF generated files
+sdkconfig
+sdkconfig.*
+!sdkconfig.defaults
+build/
+managed_components/
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+*.swp
+
